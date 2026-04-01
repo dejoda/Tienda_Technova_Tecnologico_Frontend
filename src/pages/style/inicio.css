@@ -119,6 +119,13 @@
     border-radius: 14px;
     text-align: center;
     transition: transform .2s ease, box-shadow .2s ease;
+
+    /* 👇 IMPORTANTE */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    position: relative;
 }
 
 .category-card:hover {
@@ -139,6 +146,19 @@
 .category-card p {
     color: var(--muted);
     margin: 0 0 1rem;
+}
+.category-overlay {
+    position: relative;
+    z-index: 2;
+}
+
+.category-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5); /* oscurece la imagen */
+    z-index: 1;
+    border-radius: 14px;
 }
 
 .product-grid {
@@ -211,3 +231,5 @@
         gap: 0.7rem;
     }
 }
+
+
