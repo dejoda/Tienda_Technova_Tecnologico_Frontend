@@ -28,4 +28,9 @@ export class ProductoService {
   return response.data;
 }
 
+async getMarcas(): Promise<string[]> {
+  const response = await axios.get(`${URL}/marcas`);
+  return response.data;
+}
+
 }

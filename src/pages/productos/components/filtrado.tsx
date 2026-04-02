@@ -2,6 +2,7 @@ import type { Filtros } from "../../../service/interfaces/Filtros";
 import { useEffect, useState } from "react";
 import { CategoriaService } from "../../../service/categoriaService";
 import type { Categoria } from "../../../service/interfaces/Categoria";
+import { ProductoService } from "../../../service/productoService";
 
 import "./style/fitlrado.css";
 interface Props {
@@ -13,8 +14,12 @@ const Filtrado = ({ filtros, setFiltros }: Props) => {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const service = new CategoriaService();
 
+  const [marcas, setMarcas] = useState<string[]>([]);
+  const productoService = new ProductoService();
+
   useEffect(() => {
     service.getCategorias().then(setCategorias);
+    productoService.getMarcas().then(setMarcas);
   }, []);
 
   const handleChange = (
@@ -30,8 +35,8 @@ const Filtrado = ({ filtros, setFiltros }: Props) => {
     setFiltros({
       categoria: "",
       marca: "",
-      minPrecio: "",
-      maxPrecio: "",
+      minPrecio: "", //no puestos por ahora
+      maxPrecio: "", //no puestos por ahora
       nombre: "",
     });
   };
@@ -41,7 +46,7 @@ const Filtrado = ({ filtros, setFiltros }: Props) => {
       <h2 className="filtros-titulo">Filtros</h2>
 
       <div className="filtro-grupo">
-        <label>Buscar producto</label>
+        <span className="titulo-seccion">Buscar producto</span>
         <input
           type="text"
           name="nombre"
@@ -50,7 +55,7 @@ const Filtrado = ({ filtros, setFiltros }: Props) => {
         />
       </div>
       <div className="filtro-grupo">
-        <span className="titulo-categoria">Categorías</span>
+        <span className="titulo-seccion">Categorías</span>
 
         <div className="lista-categorias">
           <div
@@ -82,15 +87,40 @@ const Filtrado = ({ filtros, setFiltros }: Props) => {
           ))}
         </div>
       </div>
-      <div className="filtro-grupo">
-        <label>Marca</label>
-        <input
-          type="text"
-          name="marca"
-          value={filtros.marca}
-          onChange={handleChange}
-        />
+     <div className="filtro-grupo">
+  <span className="titulo-seccion">Marcas</span>
+
+  <div className="lista-marcas">
+    <div
+      className={`categoria-item ${filtros.marca === "" ? "activa" : ""}`}
+      onClick={() =>
+        setFiltros({
+          ...filtros,
+          marca: "",
+        })
+      }
+    >
+      Todas
+    </div>
+
+    {marcas.map((marca) => (
+      <div
+        key={marca}
+        className={`categoria-item ${
+          filtros.marca === marca ? "activa" : ""
+        }`}
+        onClick={() =>
+          setFiltros({
+            ...filtros,
+            marca,
+          })
+        }
+      >
+        {marca}
       </div>
+    ))}
+  </div>
+</div>
 
       <button className="btn-limpiar" onClick={mostrarTodos}>
         Limpiar filtros

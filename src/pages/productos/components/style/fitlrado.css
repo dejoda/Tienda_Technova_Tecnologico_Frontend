@@ -4,6 +4,31 @@
   gap: 10px;
 }
 
+.lista-marcas {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  max-height: 180px;
+  overflow-y: auto;
+
+  padding-right: 6px;
+}
+
+/* Scroll interno moderno */
+.lista-marcas::-webkit-scrollbar {
+  width: 6px;
+}
+
+.lista-marcas::-webkit-scrollbar-thumb {
+  background: #8b5cf6;
+  border-radius: 10px;
+}
+
+.lista-marcas::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 .categoria-item {
   cursor: pointer;
   padding: 10px 12px;
@@ -32,4 +57,19 @@
   padding-bottom: 8px;
 
   border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.titulo-seccion {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+
+  margin-bottom: 14px;
+  margin-top: 18px;
+
+  padding-left: 10px;
+  border-left: 4px solid #8b5cf6;
+
+  letter-spacing: 0.3px;
 }
