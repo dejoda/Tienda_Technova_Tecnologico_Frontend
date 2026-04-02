@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { CategoriaService } from "../../../service/categoriaService";
 import type { Categoria } from "../../../service/interfaces/Categoria";
 
-import "./style/fitlrado.css"
+import "./style/fitlrado.css";
 interface Props {
   filtros: Filtros;
   setFiltros: React.Dispatch<React.SetStateAction<Filtros>>;
@@ -50,9 +50,20 @@ const Filtrado = ({ filtros, setFiltros }: Props) => {
         />
       </div>
       <div className="filtro-grupo">
-        <label>Categorías</label>
+        <span className="titulo-categoria">Categorías</span>
 
         <div className="lista-categorias">
+          <div
+            className={`categoria-item ${filtros.categoria === "" ? "activa" : ""}`}
+            onClick={() =>
+              setFiltros({
+                ...filtros,
+                categoria: "",
+              })
+            }
+          >
+            Todas
+          </div>
           {categorias.map((cat) => (
             <div
               key={cat.idCategoria}
@@ -80,8 +91,6 @@ const Filtrado = ({ filtros, setFiltros }: Props) => {
           onChange={handleChange}
         />
       </div>
-
-      
 
       <button className="btn-limpiar" onClick={mostrarTodos}>
         Limpiar filtros
