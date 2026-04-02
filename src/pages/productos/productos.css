@@ -149,3 +149,8 @@ body {
 .filtros-container {
   margin-top: 44px;
 }
+.filtros-container {
+  position: sticky;
+  top: 20px;
+  align-self: flex-start;
+}

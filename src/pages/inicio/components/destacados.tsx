@@ -15,7 +15,7 @@ const Destacados = () => {
         const data = await service.getProductosPresentacion();
 
         // 👇 SOLO 8 PRODUCTOS
-        setProductos(data.slice(0, 8));
+        setProductos(data.sort(() => 0.5 - Math.random()).slice(0, 6));
       } catch (error) {
         console.error("Error cargando productos:", error);
       }
@@ -25,7 +25,7 @@ const Destacados = () => {
   }, []);
   return (
     <section className="products-section">
-      <h2>Productos destacados</h2>
+      <h2>Recomendados para ti</h2>
       <div className="product-grid">
         {productos.map((producto) => (
           <div
