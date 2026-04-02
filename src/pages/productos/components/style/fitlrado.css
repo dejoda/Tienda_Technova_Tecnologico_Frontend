@@ -1,0 +1,23 @@
+.lista-categorias {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.categoria-item {
+  cursor: pointer;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: #cbd5e1;
+  transition: 0.25s;
+}
+
+.categoria-item:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.categoria-item.activa {
+  background: linear-gradient(90deg, #ec4899, #8b5cf6);
+  color: white;
+  font-weight: 600;
+}
