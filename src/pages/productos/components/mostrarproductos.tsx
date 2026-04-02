@@ -1,27 +1,33 @@
 import { useEffect, useState } from "react";
 import { ProductoService } from "../../../service/productoService";
 import type { ProductoPresentacion } from "../../../service/interfaces/ProductoPresentacion";
-import defaultImg from "../../../assets/default.jpg";
+import type { Filtros } from "../../../service/interfaces/Filtros";
+import defaultImg from "../../../assets/default.jpg"
 import { Link } from "react-router";
 
-import "./style/mostrarproductos.css";
+import "./style/mostrarproductos.css"
 
 const service = new ProductoService();
 
-const MostrarProductos = () => {
+interface Props {
+  filtros: Filtros;
+}
+
+const MostrarProductos = ({ filtros }: Props) => {
   const [productos, setProductos] = useState<ProductoPresentacion[]>([]);
 
   useEffect(() => {
     const cargarProductos = async () => {
       try {
-        const data = await service.getProductosPresentacion();
+        const data = await service.filtrarProductos(filtros);
         setProductos(data);
       } catch (error) {
         console.error(error);
       }
     };
+
     cargarProductos();
-  }, []);
+  }, [filtros]);
 
   const agregarAlCarrito = (producto: ProductoPresentacion) => {
     console.log("Añadido al carrito:", producto);
