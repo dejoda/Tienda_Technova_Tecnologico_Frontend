@@ -25,13 +25,10 @@ const MostrarProductos = () => {
 
   const agregarAlCarrito = (producto: ProductoPresentacion) => {
     console.log("Añadido al carrito:", producto);
-    // Aquí puedes integrar tu lógica de carrito
   };
 
   return (
     <section className="products-section">
-      <h2>Productos</h2>
-
       <div className="product-grid">
         {productos.map((p) => (
           <div
@@ -48,13 +45,16 @@ const MostrarProductos = () => {
               </Link>
               <p className="product-category">{p.categoria}</p>
               <p className="product-description">{p.descripcion}</p>
-              <p className="price">S/ {p.precio}</p>
-              <button
-                className="btn-small"
-                onClick={() => agregarAlCarrito(p)}
-              >
-                Añadir al carrito
-              </button>
+
+              <div className="product-footer">
+                <span className="price">S/ {p.precio}</span>
+                <button
+                  className="btn-small"
+                  onClick={() => agregarAlCarrito(p)}
+                >
+                  Añadir al carrito
+                </button>
+              </div>
             </div>
           </div>
         ))}
