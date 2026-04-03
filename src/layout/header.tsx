@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import "./style/header.css";
-import { IconUser } from '@tabler/icons-react';
-
+import { IconUserFilled } from '@tabler/icons-react';
+import { IconShoppingCartFilled } from '@tabler/icons-react';
 const Header = () => {
   return (
     <header className="site-header">
@@ -47,10 +47,10 @@ const Header = () => {
         <div className="header-actions">
           
           <button className="icon-btn" aria-label="Carrito">
-            🛒
+            <IconShoppingCartFilled />
           </button>
           <Link to="/login" className="user-btn" aria-label="Perfil">
-            <IconUser stroke={2} />
+            <IconUserFilled />
           </Link>
         </div>
       </div>
