@@ -5,6 +5,7 @@ import type { ProductoDetalle } from "../../service/interfaces/ProductoDetalle";
 
 
 import "./detalle_product.css";
+import { IconAlignJustified, IconShieldCheckFilled } from "@tabler/icons-react";
 
 const Detalle_product = () => {
   const { id } = useParams<{ id: string }>();
@@ -76,12 +77,12 @@ const Detalle_product = () => {
 
         {/* GARANTÍA */}
         <p className="garantia">
-          🛡 Garantía: {producto.garantia} meses
+          <IconShieldCheckFilled /> Garantía: {producto.garantia} meses
         </p>
 
         {/* CARACTERÍSTICAS */}
         <div className="caracteristicas">
-          <h3>Características</h3>
+          <h3><IconAlignJustified stroke={2} />Características</h3>
           <ul>
             {producto.caracteristicas.map((c, index) => (
               <li key={index}>
@@ -107,7 +108,7 @@ const Detalle_product = () => {
 
             {/* BOTÓN */}
             <button className="btn-comprar">
-              Agregar al carrito
+              Agregar al carrito 
             </button>
           </div>
         </div>

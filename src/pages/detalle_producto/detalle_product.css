@@ -87,13 +87,24 @@
 
 /* GARANTÍA */
 .garantia {
+  display: flex;
+  align-items: center; /* 🔥 centra verticalmente */
+  gap: 8px;
+
   background: rgba(255,255,255,0.05);
   padding: 10px 15px;
   border-radius: 10px;
   font-size: 0.9rem;
 }
-
 /* CARACTERÍSTICAS */
+
+.caracteristicas h3 {
+  display: flex;
+  align-items: center; /* 🔥 alinea icono con texto */
+  gap: 8px;
+
+  font-size: 1.2rem;
+}
 .caracteristicas ul {
   list-style: none;
   padding: 0;
