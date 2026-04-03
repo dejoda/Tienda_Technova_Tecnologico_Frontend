@@ -48,8 +48,8 @@ const Destacados = () => {
               <div className="product-footer">
                 <span className="price">S/ {producto.precio}</span>
 
-                <a href="/Productos" className="btn-small">
-                  Ver más
+                <a href="/productos" className="btn-small">
+                  Ver Detalles
                 </a>
               </div>
             </div>

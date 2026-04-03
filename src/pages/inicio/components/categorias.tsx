@@ -11,6 +11,7 @@ import Monitor from "../../../assets/categoria/Monitor.jpg";
 import Celulares from "../../../assets/categoria/Celulares.webp";
 
 import "./style/categorias.css";
+import { Link } from "react-router";
 
 /* 🔹 Mapa de imágenes por clave */
 const imagenesMap: Record<string, string> = {
@@ -43,7 +44,8 @@ const Categorias = () => {
   useEffect(() => {
     const service = new CategoriaService();
 
-    service.getCategorias()
+    service
+      .getCategorias()
       .then((data) => {
         const randomCategorias = [...data]
           .sort(() => Math.random() - 0.5)
@@ -73,9 +75,12 @@ const Categorias = () => {
               <h3>{categoria.nombre}</h3>
               <p>{categoria.descripcion}</p>
 
-              <a className="btn-small" href="/Productos">
+              <Link
+                className="btn-small"
+                to={`/productos?categoria=${encodeURIComponent(categoria.nombre)}`}
+              >
                 Explorar
-              </a>
+              </Link>
             </div>
           </article>
         ))}
