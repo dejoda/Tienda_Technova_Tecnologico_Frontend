@@ -3,7 +3,7 @@ import Filtrado from "./components/filtrado";
 import MostrarProductos from "./components/mostrarproductos";
 import type { Filtros } from "../../service/interfaces/Filtros";
 import "./productos.css";
-import { useSearchParams } from "react-router"; // ✅ FIX
+import { useSearchParams } from "react-router";
 
 const Productos = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -18,7 +18,7 @@ const Productos = () => {
 
   const [ready, setReady] = useState(false);
 
-  // 🔹 1. Leer URL → estado
+  // 1. Leer URL → estado
   useEffect(() => {
     const categoriaURL = searchParams.get("categoria") || "";
     const marcaURL = searchParams.get("marca") || "";
@@ -35,7 +35,7 @@ const Productos = () => {
         maxPrecio: maxPrecioURL,
       };
 
-      // 🔥 evita renders innecesarios / loops
+      // evita renders innecesarios / loops
       if (JSON.stringify(prev) === JSON.stringify(nuevosFiltros)) {
         return prev;
       }
@@ -46,9 +46,9 @@ const Productos = () => {
     setReady(true);
   }, [searchParams]);
 
-  // 🔹 2. Estado → URL
+  //  2. Estado → URL
   useEffect(() => {
-    if (!ready) return; // 👈 evita que se ejecute antes de tiempo
+    if (!ready) return; // evita que se ejecute antes de tiempo
 
     const params: any = {};
 
