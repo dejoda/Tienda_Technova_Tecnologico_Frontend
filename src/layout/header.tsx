@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import "./style/header.css";
+import { IconUser } from '@tabler/icons-react';
 
 const Header = () => {
   return (
@@ -49,7 +50,7 @@ const Header = () => {
             🛒
           </button>
           <Link to="/login" className="user-btn" aria-label="Perfil">
-            👤
+            <IconUser stroke={2} />
           </Link>
         </div>
       </div>
