@@ -105,6 +105,10 @@
   padding: 10px 0;
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
+
+/* ========================= */
+/* 🔥 SECCIÓN COMPRA MEJORADA */
+/* ========================= */
 .compra-box {
   margin-top: 25px;
 
@@ -123,7 +127,7 @@
   letter-spacing: 1px;
 }
 
-/* ACCIONES */
+/* DERECHA: cantidad + botón */
 .acciones {
   display: flex;
   align-items: center;
@@ -205,5 +209,21 @@
   .btn-comprar {
     width: 100%;
     text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .compra-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .acciones {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .btn-comprar {
+    flex: 1;
   }
 }

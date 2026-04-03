@@ -8,3 +8,4 @@ npm i axios
 
 
 # Iconos -> npm install @tabler/icons-react
+# Zoom -> npm install react-prismazoom

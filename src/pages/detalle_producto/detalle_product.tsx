@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { ProductoService } from "../../service/productoService";
 import type { ProductoDetalle } from "../../service/interfaces/ProductoDetalle";
 
+
 import "./detalle_product.css";
 
 const Detalle_product = () => {
