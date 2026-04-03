@@ -12,7 +12,7 @@ export const routes=createBrowserRouter([
     {path:'',Component:App,children:[
         {path:'',Component:inicio},
         {path:'Productos',Component:Productos},
-        {path:'detalle_product/:id',Component:Detalle_product},
+        {path:'Productos/detalle_product/:id/:name',Component:Detalle_product},
         {path:'Nosotros',Component:Nosotros},
         {path:'login',Component:Login},
         {path:'register',Component:Register},

@@ -43,10 +43,10 @@ const MostrarProductos = ({ filtros }: Props) => {
             style={{ backgroundImage: `url(${p.imagen || defaultImg})` }}
           >
             <div className="product-overlay">
-              <Link to={`/detalle_product/${p.id}`} className="product-brand">
+              <Link to={`/Productos/detalle_product/${p.id}/${p.nombre}`} className="product-brand">
                 {p.marca}
               </Link>
-              <Link to={`/detalle_product/${p.id}`} className="product-name">
+              <Link to={`/Productos/detalle_product/${p.id}/${p.nombre}`} className="product-name">
                 {p.nombre}
               </Link>
               <p className="product-category">{p.categoria}</p>
