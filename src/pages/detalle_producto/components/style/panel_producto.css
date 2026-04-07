@@ -1,37 +1,49 @@
-/* INFO */
+/* CARD DERECHA */
 .detalle-info {
   background: linear-gradient(180deg, #0b1020, #0f172a);
-  padding: 40px;
-  border-radius: 20px;
+  padding: 45px;
+  border-radius: 24px;
 
-  border: 1px solid rgba(255,255,255,0.05);
-  box-shadow: 0 0 40px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.06);
+
+  box-shadow: 
+    0 10px 40px rgba(0,0,0,0.6),
+    inset 0 0 25px rgba(255,255,255,0.02);
 
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 25px;
+
+  transition: 0.3s;
+}
+
+.detalle-info:hover {
+  transform: translateY(-5px);
 }
 
 /* NOMBRE */
 .detalle-info h1 {
-  font-size: 2.4rem;
+  font-size: 2.7rem;
+  font-weight: 800;
+  line-height: 1.2;
 }
 
 /* RATING */
 .rating {
-  font-size: 1.1rem;
   color: #facc15;
+  font-size: 1.1rem;
 }
 
 /* MARCA */
 .marca {
   color: var(--accent);
   font-weight: 600;
+  font-size: 0.95rem;
 }
 
 /* DESCRIPCIÓN */
 .descripcion {
-  color: var(--muted);
+  color: #cbd5f5;
   line-height: 1.6;
 }
 
@@ -39,38 +51,31 @@
 .garantia {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 
   background: rgba(255,255,255,0.05);
-  padding: 10px 15px;
-  border-radius: 10px;
-  font-size: 0.9rem;
+  padding: 12px 16px;
+  border-radius: 12px;
 }
 
 /* CARACTERÍSTICAS */
 .caracteristicas h3 {
   display: flex;
   align-items: center;
-  gap: 8px;
-
-  font-size: 1.2rem;
-}
-
-.caracteristicas ul {
-  list-style: none;
-  padding: 0;
+  gap: 10px;
 }
 
 .caracteristicas li {
   display: flex;
   justify-content: space-between;
-  padding: 10px 0;
+  padding: 12px 0;
+
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
 /* COMPRA */
 .compra-box {
-  margin-top: 25px;
+  margin-top: 30px;
 
   display: flex;
   justify-content: space-between;
@@ -80,11 +85,14 @@
   flex-wrap: wrap;
 }
 
-/* PRECIO */
+/* PRECIO PRO */
 .precio {
-  font-size: 2.3rem;
-  font-weight: 800;
-  letter-spacing: 1px;
+  font-size: 3rem;
+  font-weight: 900;
+
+  background: linear-gradient(90deg, #fff, #a5b4fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* ACCIONES */
@@ -98,57 +106,52 @@
 .cantidad {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 12px;
 
   background: #020617;
-  padding: 10px 14px;
-  border-radius: 12px;
-  min-width: 110px;
-}
+  border: 1px solid rgba(255,255,255,0.08);
 
-.cantidad span {
-  font-weight: 600;
-  font-size: 1rem;
+  padding: 10px 16px;
+  border-radius: 12px;
 }
 
 .cantidad button {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.08);
   border: none;
   color: white;
-  font-size: 16px;
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
+
+  width: 30px;
+  height: 30px;
+
+  border-radius: 8px;
   cursor: pointer;
   transition: 0.2s;
 }
 
 .cantidad button:hover {
-  background: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.2);
 }
 
-/* BOTÓN */
+/* BOTÓN PRO */
 .btn-comprar {
-  padding: 12px 22px;
-  border-radius: 12px;
-  border: none;
+  padding: 14px 28px;
+  border-radius: 14px;
 
-  background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+  background: linear-gradient(90deg, #ff2d95, #7b61ff);
   color: white;
 
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 1rem;
 
+  border: none;
   cursor: pointer;
-  transition: 0.25s;
 
-  white-space: nowrap;
+  transition: 0.3s;
 }
 
 .btn-comprar:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(123,97,255,0.4);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 15px 30px rgba(123,97,255,0.5);
 }
 
 /* RESPONSIVE */
@@ -160,22 +163,5 @@
 
   .btn-comprar {
     width: 100%;
-    text-align: center;
-  }
-}
-
-@media (max-width: 600px) {
-  .compra-box {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .acciones {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .btn-comprar {
-    flex: 1;
   }
 }

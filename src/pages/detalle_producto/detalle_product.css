@@ -1,19 +1,25 @@
-/* CONTENEDOR GENERAL */
+/* CONTENEDOR */
 .detalle-container {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
-  gap: 70px;
+  gap: 80px;
 
   width: 95%;
-  max-width: 1600px;
+  max-width: 1400px;
 
-  margin: 60px auto;
+  margin: 80px auto;
   padding: 20px;
+}
+
+/* FONDO GLOBAL */
+body {
+  background: radial-gradient(circle at top, #0f172a, #020617);
 }
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
   .detalle-container {
     grid-template-columns: 1fr;
+    gap: 40px;
   }
 }
