@@ -1,3 +1,4 @@
+import { IconCameraFilled, IconMovie, IconPhoneCallFilled } from "@tabler/icons-react";
 import "./style/Footer.css";
 
 const Footer = () => {
@@ -40,9 +41,9 @@ const Footer = () => {
           <div className="col social">
             <h4>Síguenos</h4>
             <div className="social-icons">
-              <a href="#">📘</a>
-              <a href="#">📷</a>
-              <a href="#">▶️</a>
+              <a href="#"><IconPhoneCallFilled /></a>
+              <a href="#"><IconCameraFilled /></a>
+              <a href="#"><IconMovie stroke={2} /></a>
             </div>
           </div>
 

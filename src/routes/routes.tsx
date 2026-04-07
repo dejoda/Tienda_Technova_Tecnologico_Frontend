@@ -6,7 +6,7 @@ import Detalle_product from "../pages/detalle_producto/detalle_product";
 import Login from "../pages/login";
 import Error404 from "../pages/Error404";
 import Register from "../pages/register";
-import Nosotros from "../pages/nosotros";
+import Nosotros from "../pages/nosotros/nosotros";
 
 export const routes=createBrowserRouter([
     {path:'',Component:App,children:[
