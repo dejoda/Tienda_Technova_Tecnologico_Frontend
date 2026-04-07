@@ -1,25 +1,23 @@
-/* CONTENEDOR */
+/* CONTENEDOR GENERAL */
 .detalle-container {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 80px;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 50px;
 
-  width: 95%;
-  max-width: 1400px;
+  width: 92%;
+  max-width: 1300px;
 
-  margin: 80px auto;
+  /* 🔥 MÁS SEPARACIÓN DEL HEADER */
+  margin: 110px auto 60px auto;
+
   padding: 20px;
 }
 
-/* FONDO GLOBAL */
-body {
-  background: radial-gradient(circle at top, #0f172a, #020617);
-}
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
   .detalle-container {
     grid-template-columns: 1fr;
-    gap: 40px;
+    margin: 90px auto 40px auto; /* también ajustado en mobile */
   }
 }
