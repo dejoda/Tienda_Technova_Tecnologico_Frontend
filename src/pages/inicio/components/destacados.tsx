@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import type { ProductoPresentacion } from "../../../service/interfaces/ProductoPresentacion";
 import { ProductoService } from "../../../service/productoService";
-import { Link } from "react-router"; 
+import { Link } from "react-router";
+import { useCart } from "../../../context/CartContext";
 
 import "./style/destacados.css";
 
 const Destacados = () => {
   const [productos, setProductos] = useState<ProductoPresentacion[]>([]);
-
+  const { addToCart } = useCart();
   useEffect(() => {
     const cargarProductos = async () => {
       try {
@@ -55,7 +56,16 @@ const Destacados = () => {
                   {/* 🔥 botón visual (no navegación aparte) */}
                   <button
                     className="btn-small"
-                    onClick={(e) => e.preventDefault()}
+                    onClick={(e) => {
+                      e.preventDefault(); // 🚫 evita ir al detalle
+
+                      addToCart({
+                        id: producto.id,
+                        name: producto.nombre,
+                        price: producto.precio,
+                        image: producto.imagen || "",
+                      });
+                    }}
                   >
                     Añadir al carrito
                   </button>

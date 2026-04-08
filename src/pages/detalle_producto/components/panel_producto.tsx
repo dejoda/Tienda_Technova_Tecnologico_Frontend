@@ -22,7 +22,7 @@ const Panel_Producto = ({ producto, cantidad, setCantidad }: Props) => {
       cantidad,
     );
 
-    setCantidad(1); // opcional (recomendado)
+    setCantidad(1);
   };
 
   return (

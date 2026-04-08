@@ -67,7 +67,7 @@ const MostrarProductos = ({ filtros }: Props) => {
               <button
                 className="btn-small"
                 onClick={(e) => {
-                  e.preventDefault(); // 🔥 evita que navegue
+                  e.preventDefault(); 
                   agregarAlCarrito(p);
                 }}
               >
