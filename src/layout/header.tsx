@@ -1,11 +1,12 @@
 import { Link } from "react-router";
 import { useState } from "react";
 import "./style/header.css";
-import { IconUserFilled, IconShoppingCartFilled } from '@tabler/icons-react';
+import { IconUserFilled, IconShoppingCartFilled } from "@tabler/icons-react";
 import Carrito from "../components/carrito/carrito"; // 👈 importa tu carrito
+import { useCart } from "../context/CartContext";
 
 const Header = () => {
-
+  const { count } = useCart();
   const [openCart, setOpenCart] = useState(false); // 🔥 estado
 
   return (
@@ -16,8 +17,18 @@ const Header = () => {
             <Link to="/" className="brand">
               <div className="logo-mark" aria-hidden>
                 <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
-                  <path d="M3 12c0-4.97 4.03-9 9-9" stroke="#ff2d95" strokeWidth="1.6" strokeLinecap="round"/>
-                  <path d="M21 12c0 4.97-4.03 9-9 9" stroke="#7b61ff" strokeWidth="1.6" strokeLinecap="round"/>
+                  <path
+                    d="M3 12c0-4.97 4.03-9 9-9"
+                    stroke="#ff2d95"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M21 12c0 4.97-4.03 9-9 9"
+                    stroke="#7b61ff"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                  />
                   <circle cx="12" cy="12" r="3" fill="#fff" opacity="0.08" />
                 </svg>
               </div>
@@ -26,21 +37,30 @@ const Header = () => {
 
             <nav className="nav">
               <ul>
-                <li><Link to="/">Inicio</Link></li>
-                <li><Link to="/productos">Productos</Link></li>
-                <li><Link to="/nosotros">Nosotros</Link></li>
+                <li>
+                  <Link to="/">Inicio</Link>
+                </li>
+                <li>
+                  <Link to="/productos">Productos</Link>
+                </li>
+                <li>
+                  <Link to="/nosotros">Nosotros</Link>
+                </li>
               </ul>
             </nav>
           </div>
 
           <div className="header-actions">
-
             {/* 🔥 BOTÓN FUNCIONAL */}
-            <button 
-              className="icon-btn" 
+            <button
+              className="icon-btn cart-btn"
               onClick={() => setOpenCart(true)}
             >
               <IconShoppingCartFilled />
+
+              {count > 0 && (
+                <span className="cart-badge">{count > 99 ? "+99" : count}</span>
+              )}
             </button>
 
             <Link to="/login" className="user-btn">
@@ -51,10 +71,7 @@ const Header = () => {
       </header>
 
       {/* 🔥 AQUI SE RENDERIZA EL CARRITO */}
-      <Carrito 
-        isOpen={openCart} 
-        onClose={() => setOpenCart(false)} 
-      />
+      <Carrito isOpen={openCart} onClose={() => setOpenCart(false)} />
     </>
   );
 };

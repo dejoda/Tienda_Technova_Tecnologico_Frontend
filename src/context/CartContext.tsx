@@ -11,7 +11,7 @@ export interface CartItem {
 
 interface CartContextType {
   cart: CartItem[];
-  addToCart: (product: Omit<CartItem, "quantity">) => void;
+  addToCart: (product: Omit<CartItem, "quantity">, qty?: number) => void;
   removeFromCart: (id: number) => void;
   increase: (id: number) => void;
   decrease: (id: number) => void;
@@ -36,44 +36,40 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
   // 🛒 AGREGAR
-  const addToCart = (product: Omit<CartItem, "quantity">) => {
-    setCart(prev => {
-      const exist = prev.find(p => p.id === product.id);
+  const addToCart = (product: Omit<CartItem, "quantity">, qty: number = 1) => {
+    setCart((prev) => {
+      const exist = prev.find((p) => p.id === product.id);
 
       if (exist) {
-        return prev.map(p =>
-          p.id === product.id
-            ? { ...p, quantity: p.quantity + 1 }
-            : p
+        return prev.map((p) =>
+          p.id === product.id ? { ...p, quantity: p.quantity + qty } : p,
         );
       }
 
-      return [...prev, { ...product, quantity: 1 }];
+      return [...prev, { ...product, quantity: qty }];
     });
   };
 
   // ❌ ELIMINAR
   const removeFromCart = (id: number) => {
-    setCart(prev => prev.filter(p => p.id !== id));
+    setCart((prev) => prev.filter((p) => p.id !== id));
   };
 
   // ➕
   const increase = (id: number) => {
-    setCart(prev =>
-      prev.map(p =>
-        p.id === id ? { ...p, quantity: p.quantity + 1 } : p
-      )
+    setCart((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, quantity: p.quantity + 1 } : p)),
     );
   };
 
   // ➖
   const decrease = (id: number) => {
-    setCart(prev =>
-      prev.map(p =>
+    setCart((prev) =>
+      prev.map((p) =>
         p.id === id
           ? { ...p, quantity: p.quantity > 1 ? p.quantity - 1 : 1 }
-          : p
-      )
+          : p,
+      ),
     );
   };
 

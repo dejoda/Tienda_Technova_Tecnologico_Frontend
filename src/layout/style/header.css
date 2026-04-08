@@ -128,3 +128,48 @@
   background: #0f172a; /* o tu color actual */
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
+
+/* CONTENEDOR RELATIVO */
+.cart-btn{
+  position: relative;
+}
+
+/* BADGE */
+.cart-badge{
+  position: absolute;
+  top: -6px;
+  right: -6px;
+
+  min-width: 18px;
+  height: 18px;
+
+  padding: 0 5px;
+
+  background: linear-gradient(135deg, #ff2d95, #7b61ff);
+  color: white;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  border-radius: 999px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 0 0 2px #0b1220; /* borde para contraste */
+
+  animation: popIn 0.25s ease;
+}
+
+/* ANIMACIÓN */
+@keyframes popIn{
+  from{
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to{
+    transform: scale(1);
+    opacity: 1;
+  }
+}

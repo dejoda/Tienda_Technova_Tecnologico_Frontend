@@ -1,7 +1,7 @@
 import { IconAlignJustified, IconShieldCheckFilled } from "@tabler/icons-react";
 import "./style/panel_producto.css";
 import type { ProductoDetalle } from "../../../service/interfaces/ProductoDetalle";
-
+import { useCart } from "../../../context/CartContext";
 interface Props {
   producto: ProductoDetalle;
   cantidad: number;
@@ -9,6 +9,22 @@ interface Props {
 }
 
 const Panel_Producto = ({ producto, cantidad, setCantidad }: Props) => {
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    addToCart(
+      {
+        id: producto.id,
+        name: producto.nombre,
+        price: producto.precio,
+        image: producto.imagenes[0]?.urlImagen || "",
+      },
+      cantidad,
+    );
+
+    setCantidad(1); // opcional (recomendado)
+  };
+
   return (
     <div className="detalle-info">
       <h1>{producto.nombre}</h1>
@@ -54,7 +70,9 @@ const Panel_Producto = ({ producto, cantidad, setCantidad }: Props) => {
             <button onClick={() => setCantidad(cantidad + 1)}>+</button>
           </div>
 
-          <button className="btn-comprar">Agregar al carrito</button>
+          <button className="btn-comprar" onClick={handleAddToCart}>
+            Agregar al carrito
+          </button>
         </div>
       </div>
     </div>
