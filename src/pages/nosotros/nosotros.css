@@ -1,71 +1,105 @@
-/* CONTENEDOR */
+/* =========================
+   CONTENEDOR
+========================= */
 .nosotros-container {
   width: 92%;
   max-width: 1200px;
-  margin: 120px auto 60px auto;
+  margin: 120px auto 80px auto;
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  gap: 70px;
 }
 
-/* HERO */
+/* =========================
+   HERO
+========================= */
 .nosotros-hero {
   text-align: center;
+  padding: 120px 30px;
+  border-radius: 24px;
+
+  background:
+    linear-gradient(rgba(3, 8, 20, 0.55), rgba(3, 8, 20, 0.75)),
+    url("../../assets/Hero_Principal.webp") center/cover no-repeat;
+
+  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
 }
 
 .nosotros-hero h1 {
-  font-size: 3rem;
+  font-size: 3.2rem;
   font-weight: 800;
 }
 
 .nosotros-hero span {
-  background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+  background: linear-gradient(90deg, var(--accent), #ff4fd8);
   -webkit-background-clip: text;
   color: transparent;
 }
 
 .nosotros-hero p {
-  color: var(--muted);
-  margin-top: 10px;
+  margin-top: 14px;
+  color: #d1d5db;
 }
 
-/* HISTORIA */
+/* =========================
+   HISTORIA
+========================= */
 .nosotros-section {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
-  gap: 40px;
+  gap: 50px;
   align-items: center;
 }
 
 .nosotros-text h2 {
-  font-size: 1.8rem;
-  margin-bottom: 15px;
+  font-size: 2rem;
+  margin-bottom: 20px;
 }
 
 .nosotros-text p {
-  color: var(--muted);
-  line-height: 1.7;
-  margin-bottom: 10px;
+  color: #b8c1d1;
+  line-height: 1.8;
+  margin-bottom: 14px;
 }
 
-/* CARD LATERAL */
+/* =========================
+   CARD LATERAL
+========================= */
 .nosotros-card {
-  background: linear-gradient(180deg, #0b1020, #0f172a);
-  border-radius: 20px;
-  padding: 30px;
+  background:
+    linear-gradient(rgba(3, 8, 20, 0.72), rgba(3, 8, 20, 0.82)),
+    url("../../assets/Hero_Nosotros.png") center/cover no-repeat;
+
+  padding: 40px 30px;
+  border-radius: 22px;
   text-align: center;
 
-  border: 1px solid rgba(255,255,255,0.05);
-  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.08);
 
-  transition: 0.3s;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.35);
+
+  transition: 0.35s;
+
+  min-height: 260px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .nosotros-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px);
 }
 
-/* GRID */
+.hero-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+/* =========================
+   GRID
+========================= */
 .nosotros-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -73,79 +107,124 @@
 }
 
 .card {
-  background: linear-gradient(180deg, #0b1020, #0f172a);
-  padding: 25px;
-  border-radius: 18px;
-
-  border: 1px solid rgba(255,255,255,0.05);
-  transition: 0.3s;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(10px);
+  padding: 32px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: 0.35s;
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 35px rgba(0,0,0,0.35);
+}
+
+.card h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
 }
 
 .card p {
-  color: var(--muted);
+  color: #b8c1d1;
+  line-height: 1.8;
 }
 
-/* CONFIANZA */
-.nosotros-confianza {
+/* =========================
+   FONDOS PERSONALIZADOS GRID
+========================= */
+
+.mission-card {
+  background:
+    linear-gradient(rgba(3,8,20,0.72), rgba(3,8,20,0.82)),
+    url("../../assets/Mision.jpg") center/cover no-repeat;
+}
+
+.vision-card {
+  background:
+    linear-gradient(rgba(3,8,20,0.72), rgba(3,8,20,0.82)),
+    url("../../assets/Vision.jpg") center/cover no-repeat;
+}
+
+.logros-card {
+  background:
+    linear-gradient(rgba(3,8,20,0.72), rgba(3,8,20,0.82)),
+    url("../../assets/Logros.webp") center/cover no-repeat;
+}
+
+/* =========================
+   CIRCULOS
+========================= */
+.nosotros-circles {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 35px;
+  justify-items: center;
 }
 
-.confianza-item {
-  background: linear-gradient(180deg, #0b1020, #0f172a);
-  padding: 25px;
-  border-radius: 16px;
-  text-align: center;
+.circle {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
 
-  border: 1px solid rgba(255,255,255,0.05);
-  transition: 0.3s;
-}
+  background:
+    linear-gradient(180deg, rgba(15,23,42,0.9), rgba(11,16,32,0.95));
 
-.confianza-item:hover {
-  transform: translateY(-5px);
-}
+  border: 1px solid rgba(255,255,255,0.08);
 
-/* STATS */
-.nosotros-stats {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   text-align: center;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+
+  transition: all 0.35s ease;
 }
 
-.nosotros-stats h2 {
-  font-size: 2.2rem;
-  font-weight: 800;
-
-  background: linear-gradient(90deg, var(--accent), var(--accent-dark));
-  -webkit-background-clip: text;
-  color: transparent;
+.circle:hover {
+  transform: translateY(-8px) scale(1.04);
 }
 
-.nosotros-stats p {
-  color: var(--muted);
+.circle span {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
 }
 
-/* RESPONSIVE */
+.circle h3 {
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.circle p {
+  color: #b8c1d1;
+  font-size: 0.9rem;
+}
+
+/* =========================
+   DESTACADO
+========================= */
+.highlight {
+  background:
+    radial-gradient(circle at top, rgba(255,47,179,0.15), rgba(15,23,42,0.95));
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
 @media (max-width: 900px) {
-  .nosotros-section {
+  .nosotros-section,
+  .nosotros-grid,
+  .nosotros-circles {
     grid-template-columns: 1fr;
   }
 
-  .nosotros-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .nosotros-confianza {
-    grid-template-columns: 1fr;
-  }
-
-  .nosotros-stats {
-    flex-direction: column;
-    gap: 20px;
+  .nosotros-hero h1 {
+    font-size: 2.4rem;
   }
 }
