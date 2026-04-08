@@ -52,7 +52,7 @@
   justify-content: space-between;
   align-items: center;
 
-  padding: 0.8rem 1rem; /* 🔽 menos altura */
+  padding: 0.8rem 1rem;
 
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 
@@ -61,31 +61,31 @@
 }
 
 .carrito-header h3 {
-  font-size: 1rem; /* 🔽 más pequeño */
+  font-size: 1rem;
   font-weight: 700;
 }
 
 /* CLOSE BUTTON */
-.close-btn{
+.close-btn {
   width: 34px;
   height: 34px;
 
   border-radius: 8px;
   border: none;
 
-  background: rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.08);
   color: white;
 
-  display: flex;              /* 🔥 CLAVE */
-  align-items: center;        /* 🔥 centra vertical */
-  justify-content: center;    /* 🔥 centra horizontal */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   cursor: pointer;
   transition: all 0.25s ease;
 }
 
-.close-btn svg{
-  width: 18px;  /* 🔥 tamaño consistente */
+.close-btn svg {
+  width: 18px;
   height: 18px;
 }
 
@@ -121,41 +121,35 @@
   border-radius: 10px;
 }
 
-/* EMPTY */
-
-.carrito-body:has(.empty){
+/* EMPTY STATE */
+.carrito-body:has(.empty) {
   display: flex;
-  align-items: center;   /* 🔥 centra vertical */
-  justify-content: center; /* 🔥 centra horizontal */
+  align-items: center;
+  justify-content: center;
 }
-.empty{
+
+.empty {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 10px;
 
-  gap: 12px;
-  text-align: center;
-
+  margin-top: 3rem;
   color: #9aa6bd;
+  font-size: 0.95rem;
 }
 
-.empty svg{
+.empty svg {
   width: 60px;
   height: 60px;
 
   padding: 12px;
   border-radius: 16px;
 
-  background: rgba(123,97,255,0.1);
+  background: rgba(123, 97, 255, 0.1);
   color: #7b61ff;
-}
-
-.carrito-body p {
-  text-align: center;
-  margin-top: 3rem;
-  color: #9aa6bd;
-  font-size: 0.95rem;
+  opacity: 0.7;
 }
 
 /* ===== FOOTER ===== */
@@ -169,15 +163,15 @@
 }
 
 /* TOTAL */
-.total{
+.total {
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  margin-bottom: 20px; /* 🔥 espacio clave */
+  margin-bottom: 20px;
   padding-bottom: 10px;
 
-  border-bottom: 1px solid rgba(255,255,255,0.06); /* línea sutil */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .total span {
@@ -219,146 +213,4 @@
   .carrito-drawer {
     width: 100%;
   }
-}
-
-/* ============================= */
-/* 🔥 ITEM (se mantiene tu diseño) */
-/* ============================= */
-
-.cart-item {
-  display: flex;
-  gap: 0.9rem;
-  align-items: center;
-
-  padding: 1rem;
-  border-radius: 14px;
-
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-
-  transition: all 0.25s ease;
-}
-
-.cart-item:hover {
-  transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.06);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-}
-
-/* IMG */
-.cart-img {
-  width: 70px;
-  height: 70px;
-  flex-shrink: 0;
-}
-
-.cart-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 12px;
-}
-
-/* INFO */
-.cart-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-/* NAME */
-.cart-name {
-  font-size: 0.9rem;
-  font-weight: 700;
-  margin: 0;
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* PRICE */
-.cart-middle {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.cart-price {
-  font-size: 0.8rem;
-  color: #9aa6bd;
-}
-
-.cart-subtotal {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #fff;
-}
-
-/* ACTIONS */
-.cart-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 6px;
-}
-
-/* QTY */
-.cart-qty {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-
-  background: rgba(255, 255, 255, 0.08);
-  padding: 3px 8px;
-  border-radius: 999px;
-}
-
-.cart-qty button {
-  width: 24px;
-  height: 24px;
-
-  border: none;
-  border-radius: 6px;
-
-  background: transparent;
-  color: white;
-
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.2s;
-}
-
-.cart-qty button:hover {
-  background: linear-gradient(135deg, #ff2d95, #7b61ff);
-}
-
-/* REMOVE */
-.cart-remove{
-  background: rgba(255,45,149,0.15);
-  border: none;
-  color: #ff2d95;
-
-  width: 34px;
-  height: 34px;
-
-  border-radius: 10px;
-
-  display: flex;              /* 🔥 centra icono */
-  align-items: center;
-  justify-content: center;
-
-  cursor: pointer;
-  transition: 0.2s;
-}
-.cart-remove svg{
-  width: 18px;  /* 🔥 tamaño perfecto */
-  height: 18px;
-}
-
-.cart-remove:hover{
-  background: linear-gradient(135deg, #ff2d95, #7b61ff);
-  color: white;
-  transform: scale(1.1);
 }

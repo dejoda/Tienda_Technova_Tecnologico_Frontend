@@ -1,0 +1,52 @@
+/* =========================
+   HISTORIA
+========================= */
+.nosotros-section {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.nosotros-text h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.nosotros-text p {
+  color: #b8c1d1;
+  line-height: 1.8;
+  margin-bottom: 14px;
+}
+
+/* CARD */
+.nosotros-card {
+  background:
+    linear-gradient(rgba(3, 8, 20, 0.72), rgba(3, 8, 20, 0.82)),
+    url("../../../../assets/Hero_Nosotros.png") center/cover no-repeat;
+
+  padding: 40px 30px;
+  border-radius: 22px;
+  text-align: center;
+
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 10px 35px rgba(0,0,0,0.35);
+
+  transition: 0.35s;
+
+  min-height: 260px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.nosotros-card:hover {
+  transform: translateY(-8px);
+}
+
+.hero-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}

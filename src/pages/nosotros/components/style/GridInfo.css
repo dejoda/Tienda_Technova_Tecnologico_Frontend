@@ -1,0 +1,53 @@
+/* =========================
+   GRID
+========================= */
+.nosotros-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.card {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(10px);
+  padding: 32px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: 0.35s;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 35px rgba(0,0,0,0.35);
+}
+
+.card h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.card p {
+  color: #b8c1d1;
+  line-height: 1.8;
+}
+
+/* BACKGROUNDS */
+.mission-card {
+  background:
+    linear-gradient(rgba(3,8,20,0.72), rgba(3,8,20,0.82)),
+    url("../../../../assets/Mision.jpg") center/cover no-repeat;
+}
+
+.vision-card {
+  background:
+    linear-gradient(rgba(3,8,20,0.72), rgba(3,8,20,0.82)),
+    url("../../../../assets/Vision.jpg") center/cover no-repeat;
+}
+
+.logros-card {
+  background:
+    linear-gradient(rgba(3,8,20,0.72), rgba(3,8,20,0.82)),
+    url("../../../../assets/Logros.webp") center/cover no-repeat;
+}
