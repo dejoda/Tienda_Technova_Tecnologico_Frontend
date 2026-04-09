@@ -3,7 +3,7 @@ import {createContext,useContext,useState,useEffect,type ReactNode,} from "react
 /* =========================================================
    🧾 TIPOS
 ========================================================= */
-export interface CartItem {
+export interface CartItem { //Sirve para el producto añadido en el carro (su estructura)
   id: number;
   name: string;
   price: number;
@@ -11,22 +11,23 @@ export interface CartItem {
   quantity: number;
 }
 
-interface CartContextType {
-  cart: CartItem[];
+interface CartContextType { //Diferentes funciones como añadir al carrito el producto
+                            //Eliminar incrementar productos como reducir , tambien se declaran las variables total y count 
+  cart: CartItem[];//de tipo array de CartItems (productos)
 
   addToCart: (product: Omit<CartItem, "quantity">, qty?: number) => void;
   removeFromCart: (id: number) => void;
   increase: (id: number) => void;
   decrease: (id: number) => void;
 
-  total: number;
-  count: number;
+  total: number; //variable total para suma totoal de precios
+  count: number; // conteo de productos
 }
 
 /* =========================================================
    🌐 CONTEXT
 ========================================================= */
-const CartContext = createContext<CartContextType | undefined>(undefined);
+const CartContext = createContext<CartContextType | undefined>(undefined);  
 
 /* =========================================================
    🪝 HOOK

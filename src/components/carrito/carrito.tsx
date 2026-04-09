@@ -1,15 +1,17 @@
-import {IconShoppingCartFilled,IconX} from "@tabler/icons-react";
+import { IconShoppingCartFilled, IconX } from "@tabler/icons-react";
 import { useCart } from "../../context/CartContext";
 import CartItem from "./components/CartItem";
 
 import "./carrito.css";
 
-const Carrito = ({ isOpen = false, onClose = () => {} }) => {
-  const { cart,total } = useCart();
+const Carrito = ({ isOpen = false, onClose = () => {} }) => { //Const carrito recibe los parametros 
+                                                              // isOpen(controla si el carrito se muestra o no ) y onClose(permite cerrarlo) 
+const { cart, total } = useCart(); // Se obtienen cart y total desde useCart,
+// que es una función (hook personalizada) que proporciona los datos del carrito
 
   return (
     <>
-      <div className={`overlay ${isOpen ? "show" : ""}`} onClick={onClose} />
+      <div className={`overlay ${isOpen ? "show" : ""}`} onClick={onClose} />  
 
       <aside className={`carrito-drawer ${isOpen ? "open" : ""}`}>
         <div className="carrito-header">

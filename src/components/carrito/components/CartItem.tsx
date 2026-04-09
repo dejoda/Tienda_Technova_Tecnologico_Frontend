@@ -8,7 +8,7 @@ interface Props {
 }
 
 const CartItem = ({ item }: Props) => {
-  const { increase, decrease, removeFromCart } = useCart();
+  const { increase, decrease, removeFromCart } = useCart(); 
 
   return (
     <div className="cart-item">
