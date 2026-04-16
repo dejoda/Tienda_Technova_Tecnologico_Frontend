@@ -1,15 +1,15 @@
 /* CONTENEDOR GENERAL */
 .detalle-container {
+  width: min(1320px, calc(100% - 2rem));
+  margin: 1.5rem auto 4.25rem;
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 50px;
+  grid-template-columns: 1.12fr 0.88fr;
+  gap: 1.8rem;
+  align-items: start;
+}
 
-  width: 92%;
-  max-width: 1300px;
-
-  margin: 24px auto 60px auto;
-
-  padding: 20px;
+.detalle-container > * {
+  min-width: 0;
 }
 
 
@@ -17,6 +17,14 @@
 @media (max-width: 900px) {
   .detalle-container {
     grid-template-columns: 1fr;
-    margin: 18px auto 40px auto;
+    width: min(1320px, calc(100% - 1.2rem));
+    margin: 1rem auto 3rem;
+    gap: 1.15rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .detalle-container {
+    width: min(1320px, calc(100% - 0.9rem));
   }
 }
