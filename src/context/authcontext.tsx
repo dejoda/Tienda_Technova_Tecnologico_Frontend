@@ -7,15 +7,8 @@ export interface Rol {
   nombre: "admin" | "vendedor" | "cliente";
 }
 
-export interface PerfilVendedor {
-  id: number;
-  nombre: string;
-  apellido: string;
-  correo: string;
-  telefono: string;
-}
-
-export interface PerfilCliente {
+// Las 3 tablas tienen la misma estructura de perfil
+export interface Perfil {
   id: number;
   nombre: string;
   apellido: string;
@@ -27,7 +20,7 @@ export interface AuthUser {
   id: number;
   username: string;
   rol: Rol;
-  perfil: PerfilVendedor | PerfilCliente | null; // null = admin
+  perfil: Perfil; // siempre existe, los 3 roles tienen tabla de perfil
 }
 
 // ─── Datos en memoria ─────────────────────────────────────────────────────────
@@ -41,7 +34,13 @@ const MOCK_USERS: { username: string; password: string; user: AuthUser }[] = [
       id: 1,
       username: "admin",
       rol: { id: 1, nombre: "admin" },
-      perfil: null,
+      perfil: {
+        id: 1,
+        nombre: "Carlos",
+        apellido: "Mendoza",
+        correo: "admin@technova.com",
+        telefono: "999-000-111",
+      },
     },
   },
   {
@@ -94,7 +93,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Restaurar sesión al recargar página
   useEffect(() => {
     const stored = localStorage.getItem("auth_user");
     if (stored) {
@@ -123,8 +121,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       );
       if (!found) throw new Error("Usuario o contraseña incorrectos");
       const loggedUser = found.user;
-
-      // ───────────────────────────────────────────────────────────────────
 
       setUser(loggedUser);
       localStorage.setItem("auth_user", JSON.stringify(loggedUser));

@@ -2,23 +2,24 @@
 
 .dashboard-layout {
   display: flex;
-  min-height: 100vh;
+  min-height: calc(100vh - 60px); /* descuenta el alto del header */
+  margin-top: 60px;               /* empuja el contenido bajo el header fijo */
   background: #0b0d12;
 }
 
 .dashboard-layout__main {
   flex: 1;
-  margin-left: 240px;
+  margin-left: 0;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  transition: margin-left 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: calc(100vh - 60px);
 }
 
 .dashboard-layout__content {
   flex: 1;
   padding: 28px 32px;
   overflow-y: auto;
+  color: #eaf0f9;
 }
 
 /* Loading spinner */

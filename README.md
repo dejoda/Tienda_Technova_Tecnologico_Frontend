@@ -5,10 +5,11 @@ Tienda de perifericos Technova utilizando React + Json Server +
 npm i 
 npm i react-router
 npm i axios
-
+npm install lucide-react
 
 # Iconos -> npm install @tabler/icons-react
 # Zoom -> npm install react-prismazoom
+
 
 <img width="1801" height="916" alt="image" src="https://github.com/user-attachments/assets/22d339ad-88bf-4f01-90a1-4546f09e9a47" />
 
