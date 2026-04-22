@@ -2,6 +2,7 @@ import { NavLink } from "react-router";
 import { IconLogout } from "@tabler/icons-react";
 import { useAuth } from "../../context/authcontext";
 import { menuByRole, getRoleColor, getRoleLabel } from "./SidebarByRole";
+import logoImage from "../../assets/logotipo.png";
 import "./style/Sidebar.css";
 
 const Sidebar = () => {
@@ -23,7 +24,7 @@ const Sidebar = () => {
       {/* ── Header ── */}
       <div className="sidebar__header">
         <div className="sidebar__brand">
-          <span className="sidebar__brand-icon">⬡</span>
+          <img src={logoImage} alt="Technova" className="sidebar__brand-image" />
           <span className="sidebar__brand-name">TECHNOVA</span>
         </div>
       </div>

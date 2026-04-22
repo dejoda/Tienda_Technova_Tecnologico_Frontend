@@ -5,6 +5,7 @@ import { IconUserFilled, IconShoppingCartFilled } from "@tabler/icons-react";
 import Carrito from "../components/carrito/carrito";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/authcontext";
+import logoImage from "../assets/logotipo.png";
 
 const Header = () => {
   const { count } = useCart();
@@ -57,11 +58,7 @@ const Header = () => {
           <div className="header-left">
             <Link to="/" className="brand">
               <div className="logo-mark" aria-hidden>
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
-                  <path d="M3 12c0-4.97 4.03-9 9-9" stroke="#ff2d95" strokeWidth="1.6" strokeLinecap="round" />
-                  <path d="M21 12c0 4.97-4.03 9-9 9" stroke="#7b61ff" strokeWidth="1.6" strokeLinecap="round" />
-                  <circle cx="12" cy="12" r="3" fill="#fff" opacity="0.08" />
-                </svg>
+                <img src={logoImage} alt="Technova" className="logo-image" />
               </div>
               <div className="logo-text">TECHNOVA</div>
             </Link>

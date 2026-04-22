@@ -41,13 +41,15 @@
 .sidebar__brand {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   overflow: hidden;
 }
 
-.sidebar__brand-icon {
-  font-size: 18px;
-  color: #ff2d95;
+.sidebar__brand-image {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  display: block;
   flex-shrink: 0;
 }
 
