@@ -1,17 +1,3 @@
-/* ---------- Variables globales ---------- */
-:root {
-    --bg: #0a0a11;
-    --fg: #eaeefe;
-    --muted: #aab2c5;
-    --accent: #ff2d95;
-    --accent-dark: #7b61ff;
-}
-
-/* ---------- Página principal ---------- */
-.home-page {
-    color: var(--fg);
-    background: radial-gradient(circle at top left, #11111b 0%, #07070a 100%);
-}
 
 /* ---------- Secciones Categories ---------- */
 .categories-section {
