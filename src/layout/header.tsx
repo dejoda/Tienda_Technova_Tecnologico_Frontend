@@ -1,8 +1,9 @@
-import { Link, useNavigate } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { useState, useRef, useEffect } from "react";
 import "./style/header.css";
 import { IconUserFilled, IconShoppingCartFilled } from "@tabler/icons-react";
 import Carrito from "../components/carrito/carrito";
+import Buscador from "../components/buscador/buscador.tsx";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/authcontext";
 import logoImage from "../assets/logotipo.png";
@@ -70,14 +71,28 @@ const Header = () => {
 
             <nav className="nav">
               <ul>
-                <li><Link to="/">Inicio</Link></li>
-                <li><Link to="/productos">Productos</Link></li>
-                <li><Link to="/nosotros">Nosotros</Link></li>
+                <li>
+                  <NavLink to="/" end className={({ isActive }) => isActive ? "active" : ""}>
+                    Inicio
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/productos" className={({ isActive }) => isActive ? "active" : ""}>
+                    Productos
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/nosotros" className={({ isActive }) => isActive ? "active" : ""}>
+                    Nosotros
+                  </NavLink>
+                </li>
               </ul>
             </nav>
           </div>
 
           <div className="header-actions">
+            <Buscador />
+
             <button className="icon-btn cart-btn" onClick={() => setOpenCart(true)}>
               <IconShoppingCartFilled />
               {count > 0 && (

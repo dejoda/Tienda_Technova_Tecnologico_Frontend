@@ -11,13 +11,13 @@ body {
 .pagina-productos {
   background: #0f172a;
   min-height: 100vh;
-  padding: 40px 0;
+  padding: 104px 0 40px;
 }
 
 /* LAYOUT PRINCIPAL */
 .productos-layout {
   display: grid;
-  grid-template-columns: 320px 1fr;
+  grid-template-columns: 360px 1fr;
   gap: 30px;
 
   width: 95%;
@@ -29,11 +29,11 @@ body {
 
 /* CONTENEDOR FILTROS */
 .filtros-container {
-  background: linear-gradient(180deg, #0b1020, #0f172a);
+  background: linear-gradient(180deg, #162a53 0%, #112243 100%);
   border-radius: 16px;
   padding: 25px 22px;
-  border: 1px solid rgba(255,255,255,0.05);
-  box-shadow: 0 0 25px rgba(0,0,0,0.4);
+  border: 1px solid rgba(154, 178, 255, 0.16);
+  box-shadow: 0 12px 32px rgba(3, 8, 20, 0.42);
   width: 100%;
 }
 
@@ -115,42 +115,25 @@ body {
   box-shadow: 0 0 15px rgba(139,92,246,0.5);
 }
 
-/* GRID PRODUCTOS */
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-/* CARD PRODUCTO */
-.producto-card {
-  background: #020617;
-  border-radius: 14px;
-  padding: 15px;
-  border: 1px solid rgba(255,255,255,0.05);
-  transition: 0.25s;
-}
-
-.producto-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.5);
-}
-
-.productos-layout {
-  display: grid;
-  grid-template-columns: 320px 1000px;
-  gap: 40px;
-  align-items: stretch;
-
-  margin: 0 auto;
-  width: fit-content;
-}
-
-.filtros-container {
-  margin-top: 44px;
-}
 .filtros-container {
   position: sticky;
-  top: 20px;
+  top: 84px;
   align-self: flex-start;
+}
+
+@media (max-width: 780px) {
+  .pagina-productos {
+    padding: 92px 0 24px;
+  }
+
+  .productos-layout {
+    grid-template-columns: 1fr;
+    width: 95%;
+    gap: 20px;
+  }
+
+  .filtros-container {
+    position: relative;
+    top: auto;
+  }
 }

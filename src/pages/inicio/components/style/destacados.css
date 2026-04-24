@@ -1,116 +1,16 @@
-/* ---------- Secciones Products ---------- */
-.products-section {
+/* ---------- Sección destacados/favoritos ---------- */
+.destacados-section {
     padding: 2.5rem 1rem 2.5rem;
     max-width: 1120px;
     margin: 0 auto;
 }
 
-.products-section h2 { /* título de la sección */
+.destacados-section h2 {
     margin-bottom: 1rem;
 }
 
-/* ---------- Grid de productos ---------- */
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1rem;
-}
-
-/* ---------- Tarjeta de producto ---------- */
-.product-card {
-    position: relative;
-    border-radius: 14px;
-    overflow: hidden;
-    min-height: 220px;
-
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    display: flex;
-    align-items: flex-end;
-
-    transition: transform .2s ease, box-shadow .2s ease;
-}
-
-.product-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 18px 28px rgba(0, 0, 0, 0.35);
-}
-
-.product-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        to top,
-        rgba(0,0,0,0.85),
-        rgba(0,0,0,0.2)
-    );
-    z-index: 1;
-}
-
-.product-overlay {
-    position: relative;
-    z-index: 2;
-    padding: 1rem;
-    width: 100%;
-}
-
-.product-thumb {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 900;
-    margin-bottom: 0.8rem;
-}
-
-.product-card h3 {
-    margin: 0 0 0.45rem;
-    color: #fff;
-}
-
-.product-card p {
-    color: var(--muted);
-    margin: 0 0 1rem;
-}
-
-.product-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.price {
-    font-weight: 900;
-    color: #fff;
-}
-
-.btn-small {
-    color: #fff;
-    background: linear-gradient(90deg, var(--accent), var(--accent-dark));
-    border-radius: 999px;
-    padding: 0.4rem 0.8rem;
-    text-decoration: none;
-    font-weight: 700;
-}
-
-/* ---------- Responsive ---------- */
 @media (max-width: 780px) {
-    .product-grid {
-        gap: 0.7rem;
+    .destacados-section {
+        padding: 2rem 0.8rem 2.2rem;
     }
-}
-
-/* ---------- Branding dentro del producto ---------- */
-.product-brand {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 0.3rem;
 }

@@ -1,78 +1,185 @@
-.lista-categorias {
+
+/* ── Panel ── */
+.fc {
+  width: 100%;
+  flex-shrink: 0;
+  min-height: 82vh;
+  background: linear-gradient(180deg, #182a52 0%, #121f3f 100%);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  position: sticky;
+  top: 20px;
+  align-self: flex-start;
+}
+
+/* ── Header ── */
+.fc-header {
+  padding: 1.1rem 1.3rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.lista-marcas {
+.fc-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  max-height: 180px;
-  overflow-y: auto;
-
-  padding-right: 6px;
+  align-items: center;
+  gap: 8px;
 }
-/* Scroll interno moderno */
+.fc-title svg { opacity: 0.5; }
 
-
-
-/* Scroll interno moderno */
-.lista-marcas::-webkit-scrollbar {
-  width: 6px;
-}
-
-.lista-marcas::-webkit-scrollbar-thumb {
-  background: #8b5cf6;
-  border-radius: 10px;
-}
-
-.lista-marcas::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.categoria-item {
+.fc-clear {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #fff;
+  background: none;
+  border: none;
   cursor: pointer;
-  padding: 10px 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+}
+.fc-clear:hover {
+  color: #ff6eb4;
+  background: rgba(255, 45, 149, 0.08);
+}
+
+/* ── Secciones ── */
+.fc-section {
+  padding: 1rem 1.3rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.fc-section:last-child { border-bottom: none; }
+
+.fc-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0 0 0.7rem;
+}
+
+/* ── Buscador ── */
+.fc-search {
+  position: relative;
+}
+.fc-search svg {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.3;
+  pointer-events: none;
+}
+.fc-search input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 10px;
-  color: #cbd5e1;
-  transition: 0.25s;
+  padding: 0.55rem 0.75rem 0.55rem 2.1rem;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  box-sizing: border-box;
+}
+.fc-search input::placeholder { color: rgba(255, 255, 255, 0.75); }
+.fc-search input:focus {
+  border-color: rgba(139, 92, 246, 0.5);
+  background: rgba(139, 92, 246, 0.05);
 }
 
-.categoria-item:hover {
-  background: rgba(255,255,255,0.05);
+/* ── Chips de categoría ── */
+.fc-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
-.categoria-item.activa {
-  background: linear-gradient(90deg, #ec4899, #8b5cf6);
-  color: white;
+.fc-chip {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.73rem;
+  font-weight: 500;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 5px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+.fc-chip:hover {
+  color: rgba(255, 255, 255, 0.8);
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.07);
+}
+.fc-chip.active {
+  color: #fff;
+  background: linear-gradient(90deg,
+    rgba(236, 72, 153, 0.2),
+    rgba(139, 92, 246, 0.2)
+  );
+  border-color: rgba(139, 92, 246, 0.4);
   font-weight: 600;
 }
 
-.titulo-categoria {
-  display: block;
-  font-size: 16px;
-  font-weight: 700;
-  color: white;
+/* ── Lista de marcas ── */
+.fc-marcas {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.fc-marcas::-webkit-scrollbar { width: 3px; }
+.fc-marcas::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.4);
+  border-radius: 10px;
+}
+.fc-marcas::-webkit-scrollbar-track { background: transparent; }
 
-  margin-bottom: 14px;
-  padding-bottom: 8px;
-
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+.fc-marca {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  color: #fff;
+}
+.fc-marca:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+}
+.fc-marca.active {
+  background: rgba(139, 92, 246, 0.1);
+  color: #fff;
 }
 
-.titulo-seccion {
-  display: block;
-  font-size: 16px;
-  font-weight: 700;
-  color: white;
-
-  margin-bottom: 14px;
-  margin-top: 18px;
-
-  padding-left: 10px;
-  border-left: 4px solid #8b5cf6;
-
-  letter-spacing: 0.3px;
+.fc-marca-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.fc-marca.active .fc-marca-dot {
+  background: #8b5cf6;
+  box-shadow: 0 0 6px rgba(139, 92, 246, 0.6);
 }

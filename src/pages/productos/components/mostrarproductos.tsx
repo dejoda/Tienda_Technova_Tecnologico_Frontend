@@ -4,9 +4,7 @@ import type { ProductoPresentacion } from "../../../service/interfaces/ProductoP
 import type { Filtros } from "../../../service/interfaces/Filtros";
 import defaultImg from "../../../assets/default.jpg";
 import { Link } from "react-router";
-
 import { useCart } from "../../../context/CartContext";
-
 import "./style/mostrarproductos.css";
 
 const service = new ProductoService();
@@ -28,7 +26,6 @@ const MostrarProductos = ({ filtros }: Props) => {
         console.error(error);
       }
     };
-
     cargarProductos();
   }, [filtros]);
 
@@ -41,7 +38,7 @@ const MostrarProductos = ({ filtros }: Props) => {
     });
   };
 
-  const recortarTexto = (texto?: string, max = 30) => {
+  const recortarTexto = (texto?: string, max = 55) => {
     if (!texto) return "";
     return texto.length > max ? texto.slice(0, max) + "..." : texto;
   };
@@ -53,23 +50,30 @@ const MostrarProductos = ({ filtros }: Props) => {
           <Link
             to={`/Productos/detalle_product/${p.id}/${p.nombre}`}
             key={p.id}
-            style={{ textDecoration: "none" }}
+            className="product-link"
           >
-            <div
-              className="product-card"
-              style={{ backgroundImage: `url(${p.imagen || defaultImg})` }}
-            >
-              <div className="product-overlay">
+            <div className="product-card">
+
+              {/* ── Zona imagen ── */}
+              <div
+                className="product-card-img"
+                style={{ backgroundImage: `url(${p.imagen || defaultImg})` }}
+              >
                 <span className="product-brand">{p.marca}</span>
-                <span className="product-name">{p.nombre}</span>
+              </div>
+
+              {/* ── Zona contenido ── */}
+              <div className="product-body">
                 <p className="product-category">{p.categoria}</p>
+                <h3 className="product-name">{p.nombre}</h3>
                 <p className="product-description">
-                  {recortarTexto(p.descripcion, 30)}
+                  {recortarTexto(p.descripcion, 55)}
                 </p>
 
                 <div className="product-footer">
-                  <span className="price">S/ {p.precio}</span>
-
+                  <span className="price">
+                    <em>S/</em> {p.precio}
+                  </span>
                   <button
                     className="btn-small"
                     onClick={(e) => {
@@ -81,6 +85,7 @@ const MostrarProductos = ({ filtros }: Props) => {
                   </button>
                 </div>
               </div>
+
             </div>
           </Link>
         ))}

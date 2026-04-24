@@ -15,7 +15,7 @@ const Hero = () => {
           Equipamos tu día a día con equipos y accesorios de última
           generación.
         </p>
-        <a href="/Productos" className="hero-btn">
+        <a href="/productos" className="hero-btn">
           Ver catálogos y ofertas
         </a>
       </div>
