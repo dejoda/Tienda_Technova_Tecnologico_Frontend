@@ -19,7 +19,9 @@ const LoginForm = () => {
 
     try {
       await login(username, password);
-      navigate("/dashboard"); // redirige al dashboard tras login exitoso
+      const storedUser = localStorage.getItem("auth_user");
+      const rol = storedUser ? JSON.parse(storedUser).rol?.nombre : null;
+      navigate(`/dashboard/${rol ?? "cliente"}`);
     } catch (err: any) {
       setError(err.message || "Error al iniciar sesión");
     } finally {

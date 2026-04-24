@@ -61,7 +61,11 @@ const Sidebar = () => {
               <li key={item.path}>
                 <NavLink
                   to={item.path}
-                  end={item.path === "/dashboard"}
+                  end={
+                    item.path === "/dashboard/admin" ||
+                    item.path === "/dashboard/vendedor" ||
+                    item.path === "/dashboard/cliente"
+                  }
                   className={({ isActive }) =>
                     `sidebar__link ${isActive ? "sidebar__link--active" : ""}`
                   }

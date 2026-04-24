@@ -1,6 +1,4 @@
-import {
-} from "lucide-react";
-import { IconBuildingStore, IconClipboardListFilled, IconHomeFilled, IconLayoutDashboardFilled, IconReportAnalyticsFilled, IconSettingsFilled, IconShoppingCartFilled, IconUserCheck, IconUserFilled, IconUsers } from "@tabler/icons-react";
+import { IconBuildingStore,IconMapPins,IconBrandCashapp,IconPresentationAnalyticsFilled , IconClipboardListFilled, IconHomeFilled, IconLayoutDashboardFilled, IconReportAnalyticsFilled, IconSettingsFilled, IconShoppingCartFilled, IconUserCheck, IconUserFilled, IconUsers } from "@tabler/icons-react";
 import type { ComponentType } from "react";
 
 type SidebarIcon = ComponentType<{
@@ -17,10 +15,13 @@ const ClientsMenuIcon: SidebarIcon = (props) => <IconUserCheck stroke={2} {...pr
 const HomeMenuIcon: SidebarIcon = (props) => <IconHomeFilled {...props} />;
 const UserMenuIcon: SidebarIcon = (props) => <IconUserFilled {...props} />;
 const CartMenuIcon: SidebarIcon = (props) => <IconShoppingCartFilled {...props} />;
+const PagosMenuIcon: SidebarIcon = (props) => <IconBrandCashapp stroke={2} {...props} />;
+const ResumenMenuIcon: SidebarIcon = (props) => <IconPresentationAnalyticsFilled {...props} />;
+const AddressMenuIcon: SidebarIcon = (props) => <IconMapPins stroke={2} {...props} />;
 
 export interface NavItem {
   label: string;
-  path: string;
+  path: string; 
   icon: SidebarIcon;
 }
 
@@ -34,21 +35,28 @@ export const menuByRole: Record<"admin" | "vendedor" | "cliente", NavSection[]> 
     {
       section: "Principal",
       items: [
-        { label: "Dashboard",  path: "/dashboard",                icon: IconLayoutDashboardFilled },
-        { label: "Usuarios",   path: "/dashboard/usuarios",       icon: UsersMenuIcon },
-        { label: "Productos",  path: "/dashboard/productos",      icon: ProductsMenuIcon },
+        { label: "Dashboard",    path: "/dashboard/admin/resumen",        icon: ResumenMenuIcon },
+        { label: "Usuarios",   path: "/dashboard/admin/usuarios",       icon: UsersMenuIcon },
+        { label: "Clientes",   path: "/dashboard/admin/clientes",       icon: ClientsMenuIcon },
+        { label: "Inventario",  path: "/dashboard/admin/inventario",      icon: ProductsMenuIcon },
+        { label: "Pedidos",    path: "/dashboard/admin/pedidos",        icon: OrdersMenuIcon },
+        { label: "Pagos",    path: "/dashboard/admin/pagos",        icon: PagosMenuIcon },
+      
+
+        
       ],
     },
     {
       section: "Análisis",
       items: [
-        { label: "Reportes",   path: "/dashboard/reportes",       icon: ReportsMenuIcon },
+        { label: "Reportes",   path: "/dashboard/admin/reportes",       icon: ReportsMenuIcon },
       ],
     },
     {
       section: "Sistema",
       items: [
-        { label: "Configuración", path: "/dashboard/configuracion", icon: SettingsMenuIcon },
+          { label: "Perfil",    path: "/dashboard/admin/perfil",        icon: UserMenuIcon },
+        { label: "Configuración", path: "/dashboard/admin/configuracion", icon: SettingsMenuIcon },
       ],
     },
   ],
@@ -57,22 +65,24 @@ export const menuByRole: Record<"admin" | "vendedor" | "cliente", NavSection[]> 
     {
       section: "Principal",
       items: [
-        { label: "Dashboard",       path: "/dashboard",                icon: IconLayoutDashboardFilled },
-        { label: "Mis Productos",   path: "/dashboard/mis-productos",  icon: ProductsMenuIcon },
-        { label: "Pedidos",         path: "/dashboard/pedidos",        icon: OrdersMenuIcon },
+        { label: "Dashboard",         path: "/dashboard/vendedor/resumen",        icon: ResumenMenuIcon },
+        { label: "Catalogo",      path: "/dashboard/vendedor/catalogo",     icon: ProductsMenuIcon },
+        { label: "Pedidos",         path: "/dashboard/vendedor/pedidos",        icon: OrdersMenuIcon },
       ],
     },
     {
       section: "Gestión",
       items: [
-        { label: "Clientes",        path: "/dashboard/clientes",       icon: ClientsMenuIcon },
-        { label: "Reportes Ventas", path: "/dashboard/ventas",         icon: ReportsMenuIcon },
+        { label: "Clientes",        path: "/dashboard/vendedor/clientes",       icon: ClientsMenuIcon },
+        { label: "Pagos",       path: "/dashboard/vendedor/pagos",     icon: PagosMenuIcon },
+        { label: "Ventas",       path: "/dashboard/vendedor/ventas",     icon: ReportsMenuIcon },
       ],
     },
     {
       section: "Cuenta",
       items: [
-        { label: "Mi Perfil",       path: "/dashboard/perfil",         icon: UserMenuIcon },
+        { label: "Mi Perfil",       path: "/dashboard/vendedor/perfil",         icon: UserMenuIcon },
+        { label: "Configuración",   path: "/dashboard/vendedor/configuracion", icon: SettingsMenuIcon },
       ],
     },
   ],
@@ -81,20 +91,24 @@ export const menuByRole: Record<"admin" | "vendedor" | "cliente", NavSection[]> 
     {
       section: "Inicio",
       items: [
-        { label: "Inicio",      path: "/dashboard",              icon: HomeMenuIcon },
-        { label: "Mis Pedidos", path: "/dashboard/mis-pedidos",  icon: OrdersMenuIcon },
+        {label: "Inicio",     path: "/dashboard/cliente/resumen",      icon: HomeMenuIcon },
+        { label: "Mis Pedidos", path: "/dashboard/cliente/mis-pedidos",  icon: OrdersMenuIcon },
+        { label: "Mis Pagos",   path: "/dashboard/cliente/pagos",        icon: PagosMenuIcon },
       ],
     },
     {
       section: "Tienda",
       items: [
-        { label: "Carrito",     path: "/dashboard/carrito",      icon: CartMenuIcon },
+        
+        { label: "Dirección",   path: "/dashboard/cliente/direcciones",    icon: AddressMenuIcon },
+        
       ],
     },
     {
       section: "Cuenta",
       items: [
-        { label: "Mi Perfil",   path: "/dashboard/perfil",       icon: UserMenuIcon },
+        { label: "Mi Perfil",   path: "/dashboard/cliente/perfil",       icon: UserMenuIcon },
+        { label: "Configuración", path: "/dashboard/cliente/configuracion", icon: SettingsMenuIcon },
       ],
     },
   ],
@@ -102,9 +116,9 @@ export const menuByRole: Record<"admin" | "vendedor" | "cliente", NavSection[]> 
 
 export const getRoleColor = (rol: "admin" | "vendedor" | "cliente"): string => {
   const colors = {
-    admin:    "#ef4444",
-    vendedor: "#f59e0b",
-    cliente:  "#10b981",
+    admin:    "#ff0000",
+    vendedor: "#aa34b9",
+    cliente:  "#12b112",
   };
   return colors[rol];
 };

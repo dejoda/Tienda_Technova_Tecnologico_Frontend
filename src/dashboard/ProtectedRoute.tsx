@@ -18,7 +18,7 @@ const ProtectedRoute = ({ children, allowedRoles }: ProtectedRouteProps) => {
 
   // allowedRoles es string[], user.rol.nombre es string → comparación directa
   if (allowedRoles && user && !allowedRoles.includes(user.rol.nombre)) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to={`/dashboard/${user.rol.nombre}`} replace />;
   }
 
   return children ? <>{children}</> : <Outlet />;
