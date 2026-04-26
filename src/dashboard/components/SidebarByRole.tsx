@@ -1,6 +1,5 @@
 import { IconBuildingStore,IconMapPins,IconBrandCashapp,IconPresentationAnalyticsFilled , IconClipboardListFilled, IconHomeFilled, IconLayoutDashboardFilled, IconReportAnalyticsFilled, IconSettingsFilled, IconShoppingCartFilled, IconUserCheck, IconUserFilled, IconUsers } from "@tabler/icons-react";
 import type { ComponentType } from "react";
-
 type SidebarIcon = ComponentType<{
   size?: number | string;
   className?: string;
@@ -14,7 +13,6 @@ const SettingsMenuIcon: SidebarIcon = (props) => <IconSettingsFilled {...props} 
 const ClientsMenuIcon: SidebarIcon = (props) => <IconUserCheck stroke={2} {...props} />;
 const HomeMenuIcon: SidebarIcon = (props) => <IconHomeFilled {...props} />;
 const UserMenuIcon: SidebarIcon = (props) => <IconUserFilled {...props} />;
-const CartMenuIcon: SidebarIcon = (props) => <IconShoppingCartFilled {...props} />;
 const PagosMenuIcon: SidebarIcon = (props) => <IconBrandCashapp stroke={2} {...props} />;
 const ResumenMenuIcon: SidebarIcon = (props) => <IconPresentationAnalyticsFilled {...props} />;
 const AddressMenuIcon: SidebarIcon = (props) => <IconMapPins stroke={2} {...props} />;
