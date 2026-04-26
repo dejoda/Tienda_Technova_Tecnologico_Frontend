@@ -1,13 +1,26 @@
 
 /* ---------- Secciones Categories ---------- */
-.categories-section {
-    padding: 2.5rem 1rem;
-    max-width: 1120px;
+.categories-section,
+.destacados-section {
+    width: 92%;
+    max-width: 1200px;
     margin: 0 auto;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.categories-section {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
 }
 
 .categories-section h2 {
     margin-bottom: 1rem;
+}
+
+.destacados-section {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
 }
 
 /* ---------- Grid de categorías ---------- */

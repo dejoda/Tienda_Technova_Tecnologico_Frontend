@@ -2,7 +2,8 @@
     --hero-accent: #ff2d95;
     --hero-accent-dark: #7b61ff;
     --hero-fg: #dbe8ff;
-    min-height: 76vh;
+    min-height: 110vh;
+    padding: 4rem 1rem 7rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -23,7 +24,7 @@
     position: relative;
     max-width: 840px;
     text-align: center;
-    padding: 2rem;
+    padding: 2rem 2rem 4rem;
     z-index: 1;
 }
 
@@ -65,4 +66,15 @@
     transform: translateY(-2px);
     filter: brightness(1.05);
     box-shadow: 0 14px 28px rgba(123, 97, 255, 0.42);
+}
+
+@media (max-width: 780px) {
+    .hero {
+        min-height: 112vh;
+        padding: 3.5rem 1rem 6rem;
+    }
+
+    .hero-overlay {
+        padding: 1.5rem 1rem 3rem;
+    }
 }

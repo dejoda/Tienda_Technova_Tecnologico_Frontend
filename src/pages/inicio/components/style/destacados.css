@@ -1,8 +1,9 @@
 /* ---------- Sección destacados/favoritos ---------- */
 .destacados-section {
-    padding: 2.5rem 1rem 2.5rem;
-    max-width: 1120px;
+    width: 92%;
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 2.5rem 0;
 }
 
 .destacados-section h2 {
@@ -11,6 +12,7 @@
 
 @media (max-width: 780px) {
     .destacados-section {
-        padding: 2rem 0.8rem 2.2rem;
+        width: 92%;
+        padding: 2rem 0;
     }
 }
