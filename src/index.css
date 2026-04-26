@@ -1,6 +1,9 @@
 :root{
-    background: radial-gradient(circle at top, #0f172a, #020617);
-    color: white;
+  background:
+    radial-gradient(circle at top left, rgba(255, 45, 149, 0.08), transparent 26%),
+    radial-gradient(circle at top right, rgba(123, 97, 255, 0.08), transparent 24%),
+    linear-gradient(180deg, #0b0b11, #08080c);
+  color: white;
 }
 
 html {
@@ -12,13 +15,20 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-
 }
 
 body {
-  
   margin: 0;
   min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(255, 45, 149, 0.08), transparent 26%),
+    radial-gradient(circle at top right, rgba(123, 97, 255, 0.08), transparent 24%),
+    linear-gradient(180deg, #0b0b11, #08080c);
+}
+
+#root {
+  min-height: 100vh;
+  background: inherit;
 }
 
 /* Oculta barras de desplazamiento en toda la app */

@@ -25,10 +25,13 @@
 
 /* ── Card ── */
 .product-card {
-  background: linear-gradient(180deg, #182a52 0%, #121f3f 100%);
+  background:
+    radial-gradient(circle at top left, rgba(255, 45, 149, 0.16), transparent 30%),
+    radial-gradient(circle at top right, rgba(123, 97, 255, 0.16), transparent 28%),
+    linear-gradient(180deg, #1b1b2b, #141423);
   border-radius: 16px;
   overflow: hidden;
-  border: 1px solid rgba(154, 178, 255, 0.18);
+  border: 1px solid rgba(210, 154, 255, 0.18);
   display: flex;
   flex-direction: column;
   min-height: 430px;

@@ -1,8 +1,9 @@
 /* ---------- Categorías ---------- */
 
 .categories-section {
-    padding: 4rem 1.5rem;
-    max-width: 1200px;
+    width: 84%;
+    max-width: 1080px;
+    padding: 2.8rem 0 1.4rem;
     margin: 0 auto;
 }
 
@@ -19,17 +20,27 @@
 .category-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* fijo */
-    gap: 1.5rem;
+    gap: 1.7rem;
 }
 
 /* Responsive */
 @media (max-width: 1024px) {
+    .categories-section {
+        width: 88%;
+        padding: 2.3rem 0 1.2rem;
+    }
+
     .category-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 600px) {
+    .categories-section {
+        width: 90%;
+        padding: 2rem 0 1rem;
+    }
+
     .category-grid {
         grid-template-columns: 1fr;
     }
