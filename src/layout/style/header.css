@@ -12,7 +12,7 @@
 	background: linear-gradient(90deg, var(--header-bg-1), var(--header-bg-2));
   border-bottom: 1px solid rgba(255,255,255,0.08);
   backdrop-filter: blur(10px);
-	padding: 0 0.5rem;
+  padding: 0;
   box-shadow: 0 10px 28px rgba(0,0,0,0.42);
   position: fixed;
   top: 0;
@@ -22,15 +22,15 @@
 
 .header-inner{
 	width: 100%;
-	max-width: 1600px; /* más ancho */
-	margin: 0 auto;
+  max-width: none;
+  margin: 0;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	gap: 1rem;
 
 	/* padding inteligente (responsive) */
-	padding: 0.6rem clamp(1rem, 4vw, 3rem);
+  padding: 0.6rem 1.1rem;
 }
 .brand{
 	display:flex;
@@ -164,7 +164,7 @@
 @media (max-width: 780px){
 	.nav{ display:none; }
 	.logo-text { font-size: 1rem; }
-	.header-inner { padding: 0.58rem clamp(0.9rem, 3vw, 1.4rem); }
+  .header-inner { padding: 0.58rem 0.8rem; }
 }
 
 /* CONTENEDOR RELATIVO */

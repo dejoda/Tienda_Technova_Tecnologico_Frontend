@@ -1,13 +1,30 @@
 
+/* Inicio usa el fondo global definido en App/index para evitar cortes por doble capa */
+
 /* ---------- Secciones Categories ---------- */
-.categories-section {
-    padding: 2.5rem 1rem;
-    max-width: 1120px;
+.categories-section,
+.destacados-section {
+    width: 92%;
+    max-width: 1200px;
     margin: 0 auto;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.categories-section {
+    width: 84%;
+    max-width: 1080px;
+    padding-top: 2.8rem;
+    padding-bottom: 1.4rem;
 }
 
 .categories-section h2 {
     margin-bottom: 1rem;
+}
+
+.destacados-section {
+    padding-top: 1.4rem;
+    padding-bottom: 2.5rem;
 }
 
 /* ---------- Grid de categorías ---------- */
@@ -69,6 +86,12 @@
 
 /* ---------- Responsive ---------- */
 @media (max-width: 780px) {
+    .categories-section {
+        width: 88%;
+        padding-top: 2.2rem;
+        padding-bottom: 1.1rem;
+    }
+
     .hero-overlay {
         padding: 1.5rem;
     }
