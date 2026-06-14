@@ -12,22 +12,25 @@ const LoginForm = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setError("");
+  setLoading(true);
 
-    try {
-      await login(username, password);
-      const storedUser = localStorage.getItem("auth_user");
-      const rol = storedUser ? JSON.parse(storedUser).rol?.nombre : null;
-      navigate(`/dashboard/${rol ?? "cliente"}`);
-    } catch (err: any) {
-      setError(err.message || "Error al iniciar sesión");
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    await login(username, password);
+    // user ya está normalizado en el contexto
+    const storedUser = localStorage.getItem("auth_user");
+    const rol = storedUser
+      ? JSON.parse(storedUser).rol?.nombre  // ya viene en minúsculas
+      : "cliente";
+    navigate(`/dashboard/${rol}`);
+  } catch (err: any) {
+    setError(err.message || "Error al iniciar sesión");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <article className="login-form-card">

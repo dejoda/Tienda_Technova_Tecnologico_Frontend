@@ -14,8 +14,14 @@ const Sidebar = () => {
   const menuItems = menu.flatMap((section) => section.items);
   const roleColor = getRoleColor(rol);
   const roleLabel = getRoleLabel(rol);
-  const initials = `${user.perfil.nombre[0]}${user.perfil.apellido[0]}`.toUpperCase();
-  const fullName = `${user.perfil.nombre} ${user.perfil.apellido}`;
+const initials = [user.perfil.nombre?.[0], user.perfil.apellido?.[0]]
+  .filter(Boolean)
+  .join("")
+  .toUpperCase() || user.username[0].toUpperCase();
+
+const fullName = user.perfil.nombre && user.perfil.apellido
+  ? `${user.perfil.nombre} ${user.perfil.apellido}`
+  : user.username;
 
   return (
     <aside className="sidebar">
