@@ -3,7 +3,7 @@ import { useAuth } from "../context/authcontext";
 import Sidebar from "./components/Sidebar";
 import "./style/Dashboardlayout.css";
 import Header from "../layout/header";
-import Footer from "../layout/footer";
+
 
 const DashboardLayout = () => {
     const { isLoading } = useAuth();
@@ -22,7 +22,6 @@ const DashboardLayout = () => {
             <div className="dashboard-layout">
                 <Sidebar />
                 <div className="dashboard-layout__main">
-                    {/* DashboardHeader va aquí cuando lo creemos */}
                     <main className="dashboard-layout__content">
                         <Outlet />
                     </main>

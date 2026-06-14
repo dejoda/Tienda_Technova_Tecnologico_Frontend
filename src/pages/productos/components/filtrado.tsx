@@ -1,4 +1,3 @@
-
 import type { Filtros } from "../../../service/interfaces/Filtros";
 
 import { useEffect, useState } from "react";
@@ -14,84 +13,76 @@ import "./style/fitlrado.css";
 import { IconFilterFilled } from "@tabler/icons-react";
 
 interface Props {
-
   filtros: Filtros;
-
-  setFiltros: React.Dispatch<
-    React.SetStateAction<Filtros>
-  >;
+  setFiltros: React.Dispatch<React.SetStateAction<Filtros>>;
 }
 
-const Filtrado = ({
-  filtros,
-  setFiltros
-}: Props) => {
+const CAT_SIZE = 8;
+
+const Filtrado = ({ filtros, setFiltros }: Props) => {
 
   // =========================
   // ESTADOS
   // =========================
-  const [categorias, setCategorias] =
-    useState<Categoria[]>([]);
-
-  const [marcas, setMarcas] =
-    useState<string[]>([]);
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
+  const [totalCatPages, setTotalCatPages] = useState(0);
+  const [catPage, setCatPage] = useState(0);
+  const [marcas, setMarcas] = useState<string[]>([]);
 
   // =========================
   // SERVICES
   // =========================
-  const categoriaService =
-    new CategoriaService();
-
-  const productoService =
-    new ProductoService();
+  const categoriaService = new CategoriaService();
+  const productoService = new ProductoService();
 
   // =========================
-  // CARGAR DATOS
+  // CARGAR CATEGORÍAS (depende de catPage)
   // =========================
   useEffect(() => {
 
-    const cargarDatos = async () => {
-
+    const cargarCategorias = async () => {
       try {
-
-        const categoriasData =
-          await categoriaService.getCategorias();
-
-        const marcasData =
-          await productoService.getMarcas();
-
-        setCategorias(categoriasData);
-
-        setMarcas(marcasData);
-
+        const data = await categoriaService.getCategorias(catPage, CAT_SIZE);
+        setCategorias(data.content);
+        setTotalCatPages(data.totalPages);
       } catch (error) {
-
         console.error(error);
       }
     };
 
-    cargarDatos();
+    cargarCategorias();
+
+  }, [catPage]);
+
+  // =========================
+  // CARGAR MARCAS (solo una vez)
+  // =========================
+  useEffect(() => {
+
+    const cargarMarcas = async () => {
+      try {
+        const marcasData = await productoService.getMarcas();
+        setMarcas(marcasData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    cargarMarcas();
 
   }, []);
 
   // =========================
   // BUSCADOR NOMBRE
   // =========================
-  const handleNombre = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-
-    setFiltros({
-      ...filtros,
-      nombre: e.target.value
-    });
+  const handleNombre = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFiltros({ ...filtros, nombre: e.target.value });
   };
 
   // =========================
   // LIMPIAR FILTROS
   // =========================
   const mostrarTodos = () => {
-
     setFiltros({
       categoria: "",
       marca: "",
@@ -120,19 +111,14 @@ const Filtrado = ({
             stroke="white"
             strokeWidth="2.5"
           >
-
             <IconFilterFilled />
-
           </svg>
 
           Filtros
 
         </p>
 
-        <button
-          className="fc-clear"
-          onClick={mostrarTodos}
-        >
+        <button className="fc-clear" onClick={mostrarTodos}>
           Limpiar todo
         </button>
 
@@ -143,9 +129,7 @@ const Filtrado = ({
          ========================= */}
       <div className="fc-section">
 
-        <p className="fc-label">
-          Buscar
-        </p>
+        <p className="fc-label">Buscar</p>
 
         <div className="fc-search">
 
@@ -157,20 +141,8 @@ const Filtrado = ({
             stroke="white"
             strokeWidth="2.5"
           >
-
-            <circle
-              cx="11"
-              cy="11"
-              r="8"
-            />
-
-            <line
-              x1="21"
-              y1="21"
-              x2="16.65"
-              y2="16.65"
-            />
-
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
           </svg>
 
           <input
@@ -190,56 +162,53 @@ const Filtrado = ({
          ========================= */}
       <div className="fc-section">
 
-        <p className="fc-label">
-          Categoría
-        </p>
+        <p className="fc-label">Categoría</p>
 
         <div className="fc-chips">
 
           {/* TODAS */}
           <div
-            className={
-              `fc-chip ${
-                filtros.categoria === ""
-                  ? "active"
-                  : ""
-              }`
-            }
-            onClick={() =>
-              setFiltros({
-                ...filtros,
-                categoria: ""
-              })
-            }
+            className={`fc-chip ${filtros.categoria === "" ? "active" : ""}`}
+            onClick={() => setFiltros({ ...filtros, categoria: "" })}
           >
             Todas
           </div>
 
-          {/* CATEGORÍAS */}
+          {/* CATEGORÍAS DESDE BACKEND */}
           {categorias.map((cat) => (
-
             <div
               key={cat.idCategoria}
-              className={
-                `fc-chip ${
-                  filtros.categoria === cat.nombre
-                    ? "active"
-                    : ""
-                }`
-              }
-              onClick={() =>
-                setFiltros({
-                  ...filtros,
-                  categoria: cat.nombre
-                })
-              }
+              className={`fc-chip ${filtros.categoria === cat.nombre ? "active" : ""}`}
+              onClick={() => setFiltros({ ...filtros, categoria: cat.nombre })}
             >
               {cat.nombre}
             </div>
-
           ))}
 
         </div>
+
+        {/* MINI PAGINACIÓN */}
+        {totalCatPages > 1 && (
+          <div className="fc-cat-pagination">
+
+            <button
+              disabled={catPage === 0}
+              onClick={() => setCatPage((p) => p - 1)}
+            >
+              ‹
+            </button>
+
+            <span>{catPage + 1} / {totalCatPages}</span>
+
+            <button
+              disabled={catPage + 1 >= totalCatPages}
+              onClick={() => setCatPage((p) => p + 1)}
+            >
+              ›
+            </button>
+
+          </div>
+        )}
 
       </div>
 
@@ -248,61 +217,29 @@ const Filtrado = ({
          ========================= */}
       <div className="fc-section">
 
-        <p className="fc-label">
-          Marca
-        </p>
+        <p className="fc-label">Marca</p>
 
         <div className="fc-marcas">
 
           {/* TODAS */}
           <div
-            className={
-              `fc-marca ${
-                filtros.marca === ""
-                  ? "active"
-                  : ""
-              }`
-            }
-            onClick={() =>
-              setFiltros({
-                ...filtros,
-                marca: ""
-              })
-            }
+            className={`fc-marca ${filtros.marca === "" ? "active" : ""}`}
+            onClick={() => setFiltros({ ...filtros, marca: "" })}
           >
-
             <span>Todas</span>
-
             <div className="fc-marca-dot" />
-
           </div>
 
           {/* MARCAS */}
           {marcas.map((marca) => (
-
             <div
               key={marca}
-              className={
-                `fc-marca ${
-                  filtros.marca === marca
-                    ? "active"
-                    : ""
-                }`
-              }
-              onClick={() =>
-                setFiltros({
-                  ...filtros,
-                  marca
-                })
-              }
+              className={`fc-marca ${filtros.marca === marca ? "active" : ""}`}
+              onClick={() => setFiltros({ ...filtros, marca })}
             >
-
               <span>{marca}</span>
-
               <div className="fc-marca-dot" />
-
             </div>
-
           ))}
 
         </div>
@@ -314,4 +251,3 @@ const Filtrado = ({
 };
 
 export default Filtrado;
-
