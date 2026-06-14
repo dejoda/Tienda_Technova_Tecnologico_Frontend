@@ -1,185 +1,504 @@
-import { Link, NavLink, useNavigate } from "react-router";
-import { useState, useRef, useEffect } from "react";
+
+import {
+  Link,
+  NavLink,
+  useNavigate
+} from "react-router";
+
+import {
+  useState,
+  useRef,
+  useEffect
+} from "react";
+
 import "./style/header.css";
-import { IconUserFilled, IconShoppingCartFilled } from "@tabler/icons-react";
-import Carrito from "../components/carrito/carrito";
-import Buscador from "../components/buscador/buscador.tsx";
-import { useCart } from "../context/CartContext";
-import { useAuth } from "../context/authcontext";
-import logoImage from "../assets/logotipo.png";
+
+import {
+  IconUserFilled,
+  IconShoppingCartFilled
+} from "@tabler/icons-react";
+
+import Carrito
+  from "../components/carrito/carrito";
+
+import Buscador
+  from "../components/buscador/buscador";
+
+import { useCart }
+  from "../context/CartContext";
+
+import { useAuth }
+  from "../context/authcontext";
+
+import logoImage
+  from "../assets/logotipo.png";
 
 const Header = () => {
+
+  // =========================
+  // CONTEXT
+  // =========================
   const { count } = useCart();
-  const { user, isAuthenticated, logout } = useAuth();
+
+  const {
+    user,
+    isAuthenticated,
+    logout
+  } = useAuth();
+
   const navigate = useNavigate();
 
-  const [openCart, setOpenCart] = useState(false);
-  const [openUserMenu, setOpenUserMenu] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  // =========================
+  // STATES
+  // =========================
+  const [openCart, setOpenCart] =
+    useState(false);
 
+  const [openUserMenu, setOpenUserMenu] =
+    useState(false);
+
+  // =========================
+  // REFS
+  // =========================
+  const menuRef =
+    useRef<HTMLDivElement>(null);
+
+  // =========================
+  // CERRAR MENU EXTERNO
+  // =========================
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+
+    const handleClickOutside = (
+      e: MouseEvent
+    ) => {
+
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(
+          e.target as Node
+        )
+      ) {
+
         setOpenUserMenu(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+
+    document.addEventListener(
+      "mousedown",
+      handleClickOutside
+    );
+
+    return () => {
+
+      document.removeEventListener(
+        "mousedown",
+        handleClickOutside
+      );
+    };
+
   }, []);
 
+  // =========================
+  // LOGOUT
+  // =========================
   const handleLogout = () => {
+
     logout();
+
     setOpenUserMenu(false);
+
     navigate("/login");
   };
 
-  // Nombre completo desde perfil, o username si es admin
+  // =========================
+  // DISPLAY NAME
+  // =========================
   const getDisplayName = () => {
+
     if (!user) return "";
-    if (user.perfil) return `${user.perfil.nombre} ${user.perfil.apellido}`;
+
+    if (user.perfil) {
+
+      return `
+        ${user.perfil.nombre}
+        ${user.perfil.apellido}
+      `;
+    }
+
     return user.username;
   };
 
+  // =========================
+  // COLOR ROL
+  // =========================
   const getRolColor = () => {
+
     if (!user) return "#7b61ff";
-    const colors = { admin: "#ff0000", vendedor: "#aa34b9", cliente: "#12b112" };
+
+    const colors = {
+
+      admin: "#ff3b30",
+
+      vendedor: "#aa34b9",
+
+      cliente: "#12b112",
+    };
+
     return colors[user.rol.nombre];
   };
 
+  // =========================
+  // LABEL ROL
+  // =========================
   const getRolLabel = () => {
+
     if (!user) return "";
-    const labels = { admin: "Administrador", vendedor: "Vendedor", cliente: "Cliente" };
+
+    const labels = {
+
+      admin: "Administrador",
+
+      vendedor: "Vendedor",
+
+      cliente: "Cliente",
+    };
+
     return labels[user.rol.nombre];
   };
 
+  // =========================
+  // DASHBOARD
+  // =========================
   const getDashboardPath = () => {
-    if (!user) return "/dashboard";
+
+    if (!user) {
+
+      return "/dashboard";
+    }
+
     return `/dashboard/${user.rol.nombre}`;
   };
 
   return (
     <>
+
       <header className="site-header">
+
         <div className="header-inner">
+
+          {/* =========================
+              IZQUIERDA
+             ========================= */}
           <div className="header-left">
-            <Link to="/" className="brand">
-              <div className="logo-mark" aria-hidden>
-                <img src={logoImage} alt="Technova" className="logo-image" />
+
+            {/* LOGO */}
+            <Link
+              to="/"
+              className="brand"
+            >
+
+              <div
+                className="logo-mark"
+                aria-hidden
+              >
+
+                <img
+                  src={logoImage}
+                  alt="Technova"
+                  className="logo-image"
+                />
+
               </div>
-              <div className="logo-text">TECHNOVA</div>
+
+              <div className="logo-text">
+                TECHNOVA
+              </div>
+
             </Link>
 
+            {/* NAV */}
             <nav className="nav">
+
               <ul>
+
                 <li>
-                  <NavLink to="/" end className={({ isActive }) => isActive ? "active" : ""}>
+
+                  <NavLink
+                    to="/"
+                    end
+                    className={({ isActive }) =>
+                      isActive
+                        ? "active"
+                        : ""
+                    }
+                  >
                     Inicio
                   </NavLink>
+
                 </li>
+
                 <li>
-                  <NavLink to="/productos" className={({ isActive }) => isActive ? "active" : ""}>
+
+                  <NavLink
+                    to="/productos"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "active"
+                        : ""
+                    }
+                  >
                     Productos
                   </NavLink>
+
                 </li>
+
                 <li>
-                  <NavLink to="/nosotros" className={({ isActive }) => isActive ? "active" : ""}>
+
+                  <NavLink
+                    to="/nosotros"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "active"
+                        : ""
+                    }
+                  >
                     Nosotros
                   </NavLink>
+
                 </li>
+
               </ul>
+
             </nav>
+
           </div>
 
+          {/* =========================
+              DERECHA
+             ========================= */}
           <div className="header-actions">
+
+            {/* BUSCADOR */}
             <Buscador />
 
-            <button className="icon-btn cart-btn" onClick={() => setOpenCart(true)}>
+            {/* CARRITO */}
+            <button
+              className="icon-btn cart-btn"
+              onClick={() =>
+                setOpenCart(true)
+              }
+            >
+
               <IconShoppingCartFilled />
+
               {count > 0 && (
-                <span className="cart-badge">{count > 99 ? "+99" : count}</span>
+
+                <span className="cart-badge">
+
+                  {count > 99
+                    ? "+99"
+                    : count}
+
+                </span>
+
               )}
+
             </button>
 
-            {/* No logueado → icono simple */}
+            {/* =========================
+                SIN LOGIN
+               ========================= */}
             {!isAuthenticated ? (
-              <Link to="/login" className="user-btn">
+
+              <Link
+                to="/login"
+                className="user-btn"
+              >
+
                 <IconUserFilled />
+
               </Link>
+
             ) : (
-              /* Logueado → mismo icono con dot de color + dropdown */
-              <div className="user-menu-wrapper" ref={menuRef}>
+
+              /* =========================
+                  USER MENU
+                 ========================= */
+              <div
+                className="user-menu-wrapper"
+                ref={menuRef}
+              >
+
                 <button
-                  className="user-btn user-btn--active"
-                  onClick={() => setOpenUserMenu(!openUserMenu)}
-                  style={{ borderColor: getRolColor() }}
+                  className="
+                    user-btn
+                    user-btn--active
+                  "
+                  onClick={() =>
+                    setOpenUserMenu(
+                      !openUserMenu
+                    )
+                  }
+                  style={{
+                    borderColor:
+                      getRolColor()
+                  }}
                   aria-label="Menú de usuario"
                 >
+
                   <IconUserFilled />
-                  <span className="user-avatar-dot" style={{ backgroundColor: getRolColor() }} />
+
+                  <span
+                    className="user-avatar-dot"
+                    style={{
+                      backgroundColor:
+                        getRolColor()
+                    }}
+                  />
+
                 </button>
 
+                {/* DROPDOWN */}
                 {openUserMenu && (
+
                   <div className="user-dropdown">
-                    <div className="user-dropdown__header">
-                      <div className="user-dropdown__avatar-icon">
-                        <IconUserFilled size={18} />
+
+                    {/* HEADER */}
+                    <div
+                      className="
+                        user-dropdown__header
+                      "
+                    >
+
+                      <div
+                        className="
+                          user-dropdown__avatar-icon
+                        "
+                      >
+
+                        <IconUserFilled
+                          size={18}
+                        />
+
                       </div>
-                      <div className="user-dropdown__info">
-                        <p className="user-dropdown__name">{getDisplayName()}</p>
+
+                      <div
+                        className="
+                          user-dropdown__info
+                        "
+                      >
+
+                        <p
+                          className="
+                            user-dropdown__name
+                          "
+                        >
+                          {getDisplayName()}
+                        </p>
+
                         <span
-                          className="user-dropdown__role"
+                          className="
+                            user-dropdown__role
+                          "
                           style={{
-                            color: getRolColor(),
-                            borderColor: `${getRolColor()}40`,
-                            backgroundColor: `${getRolColor()}15`,
+                            color:
+                              getRolColor(),
+
+                            borderColor:
+                              `${getRolColor()}40`,
+
+                            backgroundColor:
+                              `${getRolColor()}15`,
                           }}
                         >
+
                           {getRolLabel()}
+
                         </span>
+
                       </div>
+
                     </div>
 
-                    <div className="user-dropdown__divider" />
+                    <div
+                      className="
+                        user-dropdown__divider
+                      "
+                    />
 
-                    <Link to={getDashboardPath()} className="user-dropdown__item" onClick={() => setOpenUserMenu(false)}>
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <rect x="3" y="3" width="7" height="7" rx="1" />
-                        <rect x="14" y="3" width="7" height="7" rx="1" />
-                        <rect x="3" y="14" width="7" height="7" rx="1" />
-                        <rect x="14" y="14" width="7" height="7" rx="1" />
-                      </svg>
+                    {/* DASHBOARD */}
+                    <Link
+                      to={getDashboardPath()}
+                      className="
+                        user-dropdown__item
+                      "
+                      onClick={() =>
+                        setOpenUserMenu(false)
+                      }
+                    >
                       Ir al Dashboard
                     </Link>
 
-                    <Link to={`${getDashboardPath()}/perfil`} className="user-dropdown__item" onClick={() => setOpenUserMenu(false)}>
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <circle cx="12" cy="8" r="4" />
-                        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-                      </svg>
+                    {/* PERFIL */}
+                    <Link
+                      to={`
+                        ${getDashboardPath()}
+                        /perfil
+                      `}
+                      className="
+                        user-dropdown__item
+                      "
+                      onClick={() =>
+                        setOpenUserMenu(false)
+                      }
+                    >
                       Mi Perfil
                     </Link>
 
-                    <div className="user-dropdown__divider" />
+                    <div
+                      className="
+                        user-dropdown__divider
+                      "
+                    />
 
-                    <button className="user-dropdown__item user-dropdown__item--danger" onClick={handleLogout}>
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                        <polyline points="16 17 21 12 16 7" />
-                        <line x1="21" y1="12" x2="9" y2="12" />
-                      </svg>
+                    {/* LOGOUT */}
+                    <button
+                      className="
+                        user-dropdown__item
+                        user-dropdown__item--danger
+                      "
+                      onClick={handleLogout}
+                    >
                       Cerrar sesión
                     </button>
+
                   </div>
+
                 )}
+
               </div>
+
             )}
+
           </div>
+
         </div>
+
       </header>
 
-      <Carrito isOpen={openCart} onClose={() => setOpenCart(false)} />
+      {/* =========================
+          CARRITO SIDEBAR
+         ========================= */}
+      <Carrito
+        isOpen={openCart}
+        onClose={() =>
+          setOpenCart(false)
+        }
+      />
+
     </>
   );
 };
 
 export default Header;
+

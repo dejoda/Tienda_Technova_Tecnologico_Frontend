@@ -13,10 +13,12 @@ const Sugerencias = ({ query, onSelect }: SugerenciasProps) => {
 	const service = new ProductoService();
 
 	useEffect(() => {
+		if (!query.trim()) return;
+
 		let active = true;
 
 		service
-			.getProductosPresentacion()
+			.buscarPorNombre(query)
 			.then((data) => {
 				if (active) setProductos(data);
 			})
@@ -24,10 +26,9 @@ const Sugerencias = ({ query, onSelect }: SugerenciasProps) => {
 				if (active) setProductos([]);
 			});
 
-		return () => {
-			active = false;
-		};
-	}, []);
+		return () => { active = false; };
+
+	}, [query]); // ✅ busca cada vez que cambia el query
 
 	const sugerencias = useMemo(() => {
 		const texto = query.trim().toLowerCase();
