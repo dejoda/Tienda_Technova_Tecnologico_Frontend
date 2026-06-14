@@ -1,0 +1,86 @@
+.sin-productos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.sin-productos-icon-wrapper {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at top left, rgba(255, 45, 149, 0.2), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(123, 97, 255, 0.2), transparent 60%),
+        rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 45, 149, 0.3);
+    box-shadow: 0 0 40px rgba(255, 45, 149, 0.15),
+                inset 0 0 20px rgba(123, 97, 255, 0.08);
+    color: #ff2d95;
+}
+
+.sin-productos-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sin-productos-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+}
+
+.sin-productos-desc {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    color: rgba(180, 199, 245, 0.6);
+    margin: 0;
+}
+
+.sin-productos-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 4px;
+}
+
+.sin-productos-tags span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.45);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    padding: 4px 14px;
+}
+
+.sin-productos-tags span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    background: linear-gradient(135deg, rgba(255, 45, 149, 0.15), rgba(123, 97, 255, 0.15));
+    border: 1px solid rgba(255, 45, 149, 0.35);
+    border-radius: 999px;
+    padding: 4px 14px;
+    cursor: default;
+    transition: all 0.25s ease;
+}
+
+.sin-productos-tags span:hover {
+    background: linear-gradient(135deg, rgba(255, 45, 149, 0.35), rgba(123, 97, 255, 0.35));
+    border-color: rgba(255, 45, 149, 0.7);
+    color: #ffffff;
+    box-shadow: 0 0 16px rgba(255, 45, 149, 0.3);
+    transform: translateY(-2px);
+}
