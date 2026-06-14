@@ -1,150 +1,245 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
 
-// ─── Tipos (reflejan tu BD exactamente) ──────────────────────────────────────
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  type ReactNode
+} from "react";
 
+import axios from "axios";
+
+import type {
+  ApiResponse
+} from "../service/common/index.model";
+
+// =========================
+// URL BACKEND
+// =========================
+const URL = "http://localhost:8080";
+
+// =========================
+// TIPOS
+// =========================
 export interface Rol {
+
   id: number;
-  nombre: "admin" | "vendedor" | "cliente";
+
+  nombre:
+    | "admin"
+    | "vendedor"
+    | "cliente";
 }
 
-// Las 3 tablas tienen la misma estructura de perfil
 export interface Perfil {
+
   id: number;
+
   nombre: string;
+
   apellido: string;
+
   correo: string;
+
   telefono: string;
 }
 
 export interface AuthUser {
+
   id: number;
+
   username: string;
+
   rol: Rol;
-  perfil: Perfil; // siempre existe, los 3 roles tienen tabla de perfil
+
+  perfil: Perfil;
 }
 
-// ─── Datos en memoria ─────────────────────────────────────────────────────────
-// Cuando conectes el backend, borra este array y descomenta el fetch en login()
+// =========================
+// RESPUESTA LOGIN
+// =========================
+interface LoginResponse {
 
-const MOCK_USERS: { username: string; password: string; user: AuthUser }[] = [
-  {
-    username: "admin",
-    password: "admin123",
-    user: {
-      id: 1,
-      username: "admin",
-      rol: { id: 1, nombre: "admin" },
-      perfil: {
-        id: 1,
-        nombre: "Carlos",
-        apellido: "Mendoza",
-        correo: "admin@technova.com",
-        telefono: "999-000-111",
-      },
-    },
-  },
-  {
-    username: "vendedor1",
-    password: "vend123",
-    user: {
-      id: 2,
-      username: "vendedor1",
-      rol: { id: 2, nombre: "vendedor" },
-      perfil: {
-        id: 1,
-        nombre: "Ana",
-        apellido: "García",
-        correo: "ana@tienda.com",
-        telefono: "999-111-222",
-      },
-    },
-  },
-  {
-    username: "cliente1",
-    password: "cli123",
-    user: {
-      id: 3,
-      username: "cliente1",
-      rol: { id: 3, nombre: "cliente" },
-      perfil: {
-        id: 1,
-        nombre: "Luis",
-        apellido: "Pérez",
-        correo: "luis@gmail.com",
-        telefono: "999-333-444",
-      },
-    },
-  },
-];
+  token: string;
 
-// ─── Contexto ─────────────────────────────────────────────────────────────────
+  user: AuthUser;
+}
 
+// =========================
+// CONTEXT
+// =========================
 interface AuthContextType {
+
   user: AuthUser | null;
+
+  token: string | null;
+
   isAuthenticated: boolean;
+
   isLoading: boolean;
-  login: (username: string, password: string) => Promise<void>;
+
+  login: (
+    username: string,
+    password: string
+  ) => Promise<void>;
+
   logout: () => void;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext =
+  createContext<AuthContextType | undefined>(
+    undefined
+  );
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<AuthUser | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+// =========================
+// PROVIDER
+// =========================
+export const AuthProvider = ({
+  children
+}: {
+  children: ReactNode;
+}) => {
 
+  const [user, setUser] =
+    useState<AuthUser | null>(null);
+
+  const [token, setToken] =
+    useState<string | null>(null);
+
+  const [isLoading, setIsLoading] =
+    useState(true);
+
+  // =========================
+  // RECUPERAR SESIÓN
+  // =========================
   useEffect(() => {
-    const stored = localStorage.getItem("auth_user");
-    if (stored) {
-      setUser(JSON.parse(stored));
+
+    const storedUser =
+      localStorage.getItem("auth_user");
+
+    const storedToken =
+      localStorage.getItem("auth_token");
+
+    if (storedUser && storedToken) {
+
+      setUser(JSON.parse(storedUser));
+
+      setToken(storedToken);
     }
+
     setIsLoading(false);
+
   }, []);
 
-  const login = async (username: string, password: string) => {
+  // =========================
+  // LOGIN
+  // =========================
+  const login = async (
+    username: string,
+    password: string
+  ) => {
+
     setIsLoading(true);
+
     try {
-      // ── MOCK (datos en memoria) ─────────────────────────────────────────
-      // TODO: cuando tengas backend, reemplaza este bloque con:
-      //
-      // const res = await fetch("/api/auth/login", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({ username, password }),
-      // });
-      // if (!res.ok) throw new Error("Credenciales inválidas");
-      // const { user: loggedUser } = await res.json();
-      // ───────────────────────────────────────────────────────────────────
 
-      const found = MOCK_USERS.find(
-        (u) => u.username === username && u.password === password
+      const response = await axios.post<
+        ApiResponse<LoginResponse>
+      >(`${URL}/auth/login`, {
+
+        username,
+        password
+
+      });
+
+      const data = response.data.data;
+
+      setUser(data.user);
+
+      setToken(data.token);
+
+      // LOCAL STORAGE
+      localStorage.setItem(
+        "auth_user",
+        JSON.stringify(data.user)
       );
-      if (!found) throw new Error("Usuario o contraseña incorrectos");
-      const loggedUser = found.user;
 
-      setUser(loggedUser);
-      localStorage.setItem("auth_user", JSON.stringify(loggedUser));
+      localStorage.setItem(
+        "auth_token",
+        data.token
+      );
+
+      // TOKEN GLOBAL AXIOS
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${data.token}`;
+
+    } catch (error: any) {
+
+      console.error(error);
+
+      throw new Error(
+        error?.response?.data?.message ||
+        "Error al iniciar sesión"
+      );
+
     } finally {
+
       setIsLoading(false);
     }
   };
 
+  // =========================
+  // LOGOUT
+  // =========================
   const logout = () => {
+
     setUser(null);
+
+    setToken(null);
+
     localStorage.removeItem("auth_user");
+
+    localStorage.removeItem("auth_token");
+
+    delete axios.defaults.headers.common[
+      "Authorization"
+    ];
   };
 
   return (
+
     <AuthContext.Provider
-      value={{ user, isAuthenticated: !!user, isLoading, login, logout }}
+      value={{
+        user,
+        token,
+        isAuthenticated: !!user,
+        isLoading,
+        login,
+        logout
+      }}
     >
+
       {children}
+
     </AuthContext.Provider>
   );
 };
 
+// =========================
+// HOOK
+// =========================
 export const useAuth = () => {
+
   const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth debe usarse dentro de <AuthProvider>");
+
+  if (!ctx) {
+
+    throw new Error(
+      "useAuth debe usarse dentro de <AuthProvider>"
+    );
+  }
+
   return ctx;
 };
+
