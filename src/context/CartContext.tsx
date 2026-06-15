@@ -8,9 +8,6 @@ import {
   type ReactNode,
 } from "react";
 
-/* =========================================================
-   🧾 TIPOS
-========================================================= */
 export interface CartItem {
 
   id: number;

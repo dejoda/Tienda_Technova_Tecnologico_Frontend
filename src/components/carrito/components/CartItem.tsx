@@ -1,19 +1,23 @@
 import { IconTrashFilled } from "@tabler/icons-react";
 import { useCart } from "../../../context/CartContext";
 import type { CartItem as CartItemType } from "../../../context/CartContext";
-import "./style/CartItem.css"
+import { ImageService } from "../../../service/utils/imageService";
+import "./style/CartItem.css";
 
 interface Props {
   item: CartItemType;
 }
 
 const CartItem = ({ item }: Props) => {
-  const { increase, decrease, removeFromCart } = useCart(); 
+  const { increase, decrease, removeFromCart } = useCart();
 
   return (
     <div className="cart-item">
       <div className="cart-img">
-        <img src={item.image} alt={item.name} />
+        <img
+          src={ImageService.resolve(item.image)}
+          alt={item.name}
+        />
       </div>
 
       <div className="cart-info">
