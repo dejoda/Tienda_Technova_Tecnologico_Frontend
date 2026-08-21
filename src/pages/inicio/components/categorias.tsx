@@ -47,7 +47,13 @@ const Categorias = () => {
     service
       .getCategorias()
       .then((data) => {
-        const randomCategorias = [...data]
+        // 🔹 PageResponse no es un array directo: el array real
+        // viene dentro de una propiedad como "content"
+        const lista: Categoria[] = Array.isArray(data)
+          ? data
+          : (data as any)?.content ?? [];
+
+        const randomCategorias = [...lista]
           .sort(() => Math.random() - 0.5)
           .slice(0, 4);
 

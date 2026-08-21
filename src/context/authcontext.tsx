@@ -6,7 +6,6 @@ import {
   type ReactNode
 } from "react";
 import axios from "axios";
-import type { ApiResponse } from "../service/common/index.model";
 import { environment } from "../environments/environment.development";
 
 const URL = environment.apiBaseUrl;
@@ -34,10 +33,6 @@ export interface AuthUser {
   perfil: Perfil;
 }
 
-interface LoginResponse {
-  token: string;
-  user: AuthUser;
-}
 
 interface AuthContextType {
   user: AuthUser | null;
