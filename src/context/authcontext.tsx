@@ -108,6 +108,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       axios.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {           // ← aquí empieza
       const status = error?.response?.status;
 
@@ -157,6 +158,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 // =========================
 // HOOK
 // =========================
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const ctx = useContext(AuthContext);
   if (!ctx) throw new Error("useAuth debe usarse dentro de <AuthProvider>");
