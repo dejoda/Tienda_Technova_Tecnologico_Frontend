@@ -1,10 +1,10 @@
 import { useMemo, useState } from "react";
-import { AlertTriangle, Boxes, History, Pencil, Plus, Search, Tag, Trash2, ArrowUpDown, PackageSearch } from "lucide-react";
-import StockBadge from "./components/StockBadge";
-import ProductModal from "./components/ProductModal";
-import CategoryModal from "./components/CategoryModal";
-import MovementModal from "./components/MovementModal";
-import { STOCK_BAJO, TIPO_INFO, fechaCorta, initialCategorias, initialMovimientos, initialProductos, principalDe, soles } from "./data";
+import { AlertTriangle, Boxes, History, Tag } from "lucide-react";
+import ProductosTab from "./components/ProductosTab";
+import MovimientosTab from "./components/MovimientosTab";
+import CategoriasTab from "./components/CategoriasTab";
+import AlertasTab from "./components/AlertasTab";
+import { STOCK_BAJO, initialCategorias, initialMovimientos, initialProductos } from "./data";
 import type { Categoria, Movimiento, Producto } from "./types";
 import "./style/inventario.css";
 
@@ -100,162 +100,46 @@ export default function ProductosSeccionAdmin() {
       </div>
 
       {tab === "productos" && (
-        <>
-          <div className="toolbar">
-            <div className="search-box">
-              <Search size={15} color="#7f7f95" />
-              <input placeholder="Buscar por nombre, marca o modelo..." value={search} onChange={(e) => setSearch(e.target.value)} />
-            </div>
-            <select className="filter" value={catFilter} onChange={(e) => setCatFilter(e.target.value)}>
-              <option value="all">Todas las categorías</option>
-              {categorias.map((c) => <option key={c.id} value={c.id}>{c.nombre}</option>)}
-            </select>
-            <button className="btn-primary" onClick={() => { setEditingProduct(null); setShowProductModal(true); }}>
-              <Plus size={15} /> Nuevo producto
-            </button>
-          </div>
-
-          <table>
-            <thead>
-              <tr>
-                <th>Producto</th>
-                <th>Categoría</th>
-                <th>Precio</th>
-                <th>Stock</th>
-                <th>Garantía</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map((p) => (
-                <tr key={p.id}>
-                  <td>
-                    <div className="prod-cell">
-                      <img src={principalDe(p)} alt="" />
-                      <div>
-                        <div className="prod-name">{p.nombre}</div>
-                        <div className="prod-sub">{p.marca} · {p.modelo}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>{catName(p.categoria_id)}</td>
-                  <td>{soles(p.precio)}</td>
-                  <td><StockBadge stock={p.stock} /></td>
-                  <td>{p.garantia} meses</td>
-                  <td>
-                    <div className="row-actions">
-                      <button className="icon-btn accent" title="Registrar movimiento" onClick={() => setMovementProduct(p)}><ArrowUpDown size={14} /></button>
-                      <button className="icon-btn" title="Editar" onClick={() => { setEditingProduct(p); setShowProductModal(true); }}><Pencil size={14} /></button>
-                      <button className="icon-btn danger" title="Eliminar" onClick={() => deleteProduct(p.id)}><Trash2 size={14} /></button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {filtered.length === 0 && (
-            <div className="empty"><PackageSearch size={22} style={{ marginBottom: 8 }} /><div>No se encontraron productos con esos filtros.</div></div>
-          )}
-        </>
+        <ProductosTab
+          productos={productos}
+          categorias={categorias}
+          filtered={filtered}
+          search={search}
+          setSearch={setSearch}
+          catFilter={catFilter}
+          setCatFilter={setCatFilter}
+          setEditingProduct={setEditingProduct}
+          showProductModal={showProductModal}
+          setShowProductModal={setShowProductModal}
+          editingProduct={editingProduct}
+          deleteProduct={deleteProduct}
+          setMovementProduct={setMovementProduct}
+          movementProduct={movementProduct}
+          saveProduct={saveProduct}
+          saveMovement={saveMovement}
+          catName={catName}
+        />
       )}
 
       {tab === "movimientos" && (
-        <table>
-          <thead>
-            <tr>
-              <th>Fecha</th>
-              <th>Producto</th>
-              <th>Tipo</th>
-              <th>Cantidad</th>
-              <th>Motivo</th>
-              <th>Usuario</th>
-            </tr>
-          </thead>
-          <tbody>
-            {movimientosOrdenados.map((m) => {
-              const info = TIPO_INFO[m.tipo];
-              return (
-                <tr key={m.id}>
-                  <td>{fechaCorta(m.fecha)}</td>
-                  <td>{prodName(m.producto_id)}</td>
-                  <td><span className={`mov-tipo ${info.cls}`}><info.icon size={12} /> {info.label}</span></td>
-                  <td>{m.tipo === "salida" ? "-" : "+"}{m.cantidad}</td>
-                  <td>{m.motivo}</td>
-                  <td>{m.usuario}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <MovimientosTab movimientos={movimientosOrdenados} productos={productos} />
       )}
 
       {tab === "categorias" && (
-        <>
-          <div className="toolbar">
-            <div style={{ flex: 1 }} />
-            <button className="btn-primary" onClick={() => { setEditingCategory(null); setShowCategoryModal(true); }}>
-              <Plus size={15} /> Nueva categoría
-            </button>
-          </div>
-          <div className="cat-grid">
-            {categorias.map((c) => {
-              const n = productos.filter((p) => p.categoria_id === c.id).length;
-              return (
-                <div className="cat-card" key={c.id}>
-                  <h4><Tag size={14} color="#b45cf0" /> {c.nombre}</h4>
-                  <p>{c.descripcion || "Sin descripción."}</p>
-                  <div className="cat-foot">
-                    <span className="count-tag">{n} producto{n !== 1 ? "s" : ""}</span>
-                    <div className="row-actions">
-                      <button className="icon-btn" onClick={() => { setEditingCategory(c); setShowCategoryModal(true); }}><Pencil size={13} /></button>
-                      <button className="icon-btn danger" onClick={() => deleteCategory(c.id)}><Trash2 size={13} /></button>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </>
+        <CategoriasTab
+          categorias={categorias}
+          productos={productos}
+          editingCategory={editingCategory}
+          showCategoryModal={showCategoryModal}
+          setEditingCategory={setEditingCategory}
+          setShowCategoryModal={setShowCategoryModal}
+          saveCategory={saveCategory}
+          deleteCategory={deleteCategory}
+        />
       )}
 
       {tab === "alertas" && (
-        <div className="alert-list">
-          {lowStock.length === 0 && <div className="empty">Todo el inventario tiene stock saludable.</div>}
-          {lowStock.map((p) => (
-            <div className={`alert-item ${p.stock === 0 ? "out" : ""}`} key={p.id}>
-              <img src={principalDe(p)} alt="" />
-              <div className="info">
-                <div className="n">{p.nombre}</div>
-                <div className="s">{catName(p.categoria_id)} · {p.marca} {p.modelo}</div>
-              </div>
-              <StockBadge stock={p.stock} />
-              <button className="btn-ghost" onClick={() => setMovementProduct(p)}>Reponer stock</button>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {showProductModal && (
-        <ProductModal
-          producto={editingProduct}
-          categorias={categorias}
-          onClose={() => { setShowProductModal(false); setEditingProduct(null); }}
-          onSave={saveProduct}
-        />
-      )}
-      {showCategoryModal && (
-        <CategoryModal
-          categoria={editingCategory}
-          onClose={() => { setShowCategoryModal(false); setEditingCategory(null); }}
-          onSave={saveCategory}
-        />
-      )}
-      {movementProduct && (
-        <MovementModal
-          producto={movementProduct}
-          onClose={() => setMovementProduct(null)}
-          onSave={saveMovement}
-        />
+        <AlertasTab lowStock={lowStock} catName={catName} setMovementProduct={setMovementProduct} />
       )}
     </div>
   );

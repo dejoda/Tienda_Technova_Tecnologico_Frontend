@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { X } from "lucide-react";
-import ImageManager from "./ImageManager";
-import type { Categoria, ImagenProducto, Producto, ProductoFormState } from "../types";
+import ImageManager from "../utils/ImageManager";
+import type { Categoria, ImagenProducto, Producto, ProductoFormState } from "../../types";
 
 interface ProductModalProps {
   producto: Producto | null;

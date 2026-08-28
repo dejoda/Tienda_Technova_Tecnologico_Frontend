@@ -1,6 +1,6 @@
 import { Star, Trash2, Upload } from "lucide-react";
-import { rutaImagen } from "../data";
-import type { ImagenProducto } from "../types";
+import { rutaImagen } from "../../data";
+import type { ImagenProducto } from "../../types";
 
 interface ImageManagerProps {
   nombreProducto: string;

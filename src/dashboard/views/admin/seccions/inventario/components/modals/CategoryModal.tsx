@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { X } from "lucide-react";
-import type { Categoria } from "../types";
+import type { Categoria } from "../../types";
 
 interface CategoryModalProps {
   categoria: Categoria | null;

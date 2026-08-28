@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { X } from "lucide-react";
-import { TIPO_INFO } from "../data";
-import type { Movimiento, Producto, TipoMovimiento } from "../types";
+import { TIPO_INFO } from "../../data";
+import type { Movimiento, Producto, TipoMovimiento } from "../../types";
 
 interface MovementModalProps {
   producto: Producto;
