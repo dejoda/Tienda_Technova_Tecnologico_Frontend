@@ -27,7 +27,6 @@ type ProductosTabProps = {
 };
 
 export default function ProductosTab({
-  productos,
   categorias,
   filtered,
   search,

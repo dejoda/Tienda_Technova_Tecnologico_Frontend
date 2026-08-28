@@ -24,7 +24,6 @@ export default function ProductosSeccionAdmin() {
   const [movementProduct, setMovementProduct] = useState<Producto | null>(null);
 
   const catName = (id: number) => categorias.find((c) => c.id === id)?.nombre || "—";
-  const prodName = (id: number) => productos.find((p) => p.id === id)?.nombre || "Producto eliminado";
 
   const filtered = useMemo(() => {
     return productos.filter((p) => {
