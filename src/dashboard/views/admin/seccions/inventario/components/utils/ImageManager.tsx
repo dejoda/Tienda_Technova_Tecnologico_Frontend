@@ -17,6 +17,7 @@ export default function ImageManager({ nombreProducto, imagenes, setImagenes }: 
       url: URL.createObjectURL(file),
       ruta: rutaImagen(nombreProducto, imagenes.length + i),
       principal: imagenes.length === 0 && i === 0,
+      file: file,
     }));
     setImagenes([...imagenes, ...nuevas]);
     e.target.value = "";

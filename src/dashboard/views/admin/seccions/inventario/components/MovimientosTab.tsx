@@ -27,7 +27,7 @@ export default function MovimientosTab({ movimientos, productos }: MovimientosTa
           return (
             <tr key={m.id}>
               <td>{fechaCorta(m.fecha)}</td>
-              <td>{prodName(m.producto_id)}</td>
+              <td>{prodName(m.productoId)}</td>
               <td>
                 <span className={`mov-tipo ${info.cls}`}>
                   <info.icon size={12} /> {info.label}

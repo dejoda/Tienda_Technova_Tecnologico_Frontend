@@ -5,7 +5,7 @@ import StockBadge from "./utils/StockBadge";
 
 type AlertasTabProps = {
   lowStock: Producto[];
-  catName: (id: number) => string;
+  catName: (id: any, fallback?: string) => string;
   setMovementProduct: Dispatch<SetStateAction<Producto | null>>;
 };
 
@@ -19,7 +19,7 @@ export default function AlertasTab({ lowStock, catName, setMovementProduct }: Al
           <div className="info">
             <div className="n">{p.nombre}</div>
             <div className="s">
-              {catName(p.categoria_id)} · {p.marca} {p.modelo}
+              {catName(p.categoriaId, (p as any).categoria)} · {p.marca} {p.modelo}
             </div>
           </div>
           <StockBadge stock={p.stock} />

@@ -1,6 +1,6 @@
 import { type Dispatch, type SetStateAction } from "react";
 import { ArrowUpDown, PackageSearch, Pencil, Plus, Search, Trash2 } from "lucide-react";
-import type { Categoria, Producto } from "../types";
+import type { Categoria, Producto, Marca } from "../types";
 import { principalDe, soles } from "../data";
 import StockBadge from "./utils/StockBadge";
 import ProductModal from "./modals/ProductModal";
@@ -9,6 +9,7 @@ import MovementModal from "./modals/MovementModal";
 type ProductosTabProps = {
   productos: Producto[];
   categorias: Categoria[];
+  marcas: Marca[];
   filtered: Producto[];
   search: string;
   setSearch: Dispatch<SetStateAction<string>>;
@@ -23,11 +24,13 @@ type ProductosTabProps = {
   movementProduct: Producto | null;
   saveProduct: (p: Producto) => void;
   saveMovement: (mov: any) => void;
-  catName: (id: number) => string;
+  handleCreateMarca: (nombre: string) => Promise<Marca>;
+  catName: (id: any, fallback?: string) => string;
 };
 
 export default function ProductosTab({
   categorias,
+  marcas,
   filtered,
   search,
   setSearch,
@@ -42,6 +45,7 @@ export default function ProductosTab({
   movementProduct,
   saveProduct,
   saveMovement,
+  handleCreateMarca,
   catName,
 }: ProductosTabProps) {
   return (
@@ -101,7 +105,7 @@ export default function ProductosTab({
                   </div>
                 </div>
               </td>
-              <td>{catName(p.categoria_id)}</td>
+              <td>{catName(p.categoriaId, (p as any).categoria)}</td>
               <td>{soles(p.precio)}</td>
               <td>
                 <StockBadge stock={p.stock} />
@@ -147,11 +151,13 @@ export default function ProductosTab({
         <ProductModal
           producto={editingProduct}
           categorias={categorias}
+          marcas={marcas}
           onClose={() => {
             setShowProductModal(false);
             setEditingProduct(null);
           }}
           onSave={saveProduct}
+          onCreateMarca={handleCreateMarca}
         />
       )}
 

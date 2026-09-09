@@ -40,7 +40,7 @@ export default function MovementModal({ producto, onClose, onSave }: MovementMod
     }
     onSave({
       id: Date.now(),
-      producto_id: producto.id,
+      productoId: producto.id,
       tipo,
       cantidad: cantidadNum,
       motivo: motivo.trim(),

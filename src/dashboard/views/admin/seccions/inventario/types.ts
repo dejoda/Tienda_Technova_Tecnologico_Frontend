@@ -1,8 +1,23 @@
+/**
+ * TIPOS PARA LA SECCIÓN DE INVENTARIO (ADMIN)
+ * Convención: camelCase para todas las propiedades
+ */
+
+// =============================================================================
+// PRODUCTOS
+// =============================================================================
+
 export interface ImagenProducto {
   id: number;
   url: string;
   ruta: string;
   principal: boolean;
+  file?: File; // Agregado para manejar la subida al servidor
+}
+
+export interface Marca {
+  idMarca: number;
+  nombre: string;
 }
 
 export interface Producto {
@@ -11,33 +26,18 @@ export interface Producto {
   descripcion: string;
   precio: number;
   stock: number;
+  marcaId: number;
   marca: string;
   modelo: string;
   garantia: number;
-  categoria_id: number;
+  categoriaId: number; // Corregido de categoria_id
   imagenes: ImagenProducto[];
 }
 
-export interface Categoria {
-  id: number;
-  nombre: string;
-  descripcion: string;
-}
-
-export type TipoMovimiento = "entrada" | "salida" | "ajuste";
-
-export interface Movimiento {
-  id: number;
-  producto_id: number;
-  tipo: TipoMovimiento;
-  cantidad: number;
-  motivo: string;
-  usuario: string;
-  fecha: string;
-  nuevoStock?: number;
-}
-
-// Forma del formulario del modal de producto (incluye stockInicial, propio del alta)
+/**
+ * Estado del formulario para el modal de producto.
+ * Incluye stockInicial, que es requerido solo durante la creación.
+ */
 export interface ProductoFormState {
   id?: number;
   nombre: string;
@@ -45,8 +45,35 @@ export interface ProductoFormState {
   precio: number | "";
   stock?: number;
   stockInicial?: number | "";
-  marca: string;
+  marcaId: number | "";
   modelo: string;
   garantia: number | "";
-  categoria_id: number | "";
+  categoriaId: number | ""; // Corregido de categoria_id
+}
+
+// =============================================================================
+// CATEGORÍAS
+// =============================================================================
+
+export interface Categoria {
+  id: number;
+  nombre: string;
+  descripcion: string;
+}
+
+// =============================================================================
+// MOVIMIENTOS DE INVENTARIO
+// =============================================================================
+
+export type TipoMovimiento = "entrada" | "salida" | "ajuste";
+
+export interface Movimiento {
+  id: number;
+  productoId: number; // Corregido de producto_id
+  tipo: TipoMovimiento;
+  cantidad: number;
+  motivo: string;
+  usuario: string;
+  fecha: string;
+  nuevoStock?: number;
 }

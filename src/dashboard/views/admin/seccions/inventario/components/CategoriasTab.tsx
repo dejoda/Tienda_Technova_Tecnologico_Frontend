@@ -41,7 +41,7 @@ export default function CategoriasTab({
 
       <div className="cat-grid">
         {categorias.map((c) => {
-          const n = productos.filter((p) => p.categoria_id === c.id).length;
+          const n = productos.filter((p) => p.categoriaId === c.id).length;
           return (
             <div className="cat-card" key={c.id}>
               <h4>
