@@ -8,7 +8,7 @@ import { STOCK_BAJO } from "./data";
 import { adaptProductoAdmin } from "./adapters";
 import { InventarioAdminService } from "../../services/inventario/InventarioAdminService";
 import { CategoriaService } from "../../../../../service/categoriaService";
-import type { Categoria, Movimiento, Producto, Marca } from "./types";
+import type { Categoria, Movimiento, Producto } from "./types";
 import "./style/inventario.css";
 
 type Tab = "productos" | "movimientos" | "categorias" | "alertas";
@@ -21,7 +21,7 @@ export default function ProductosSeccionAdmin() {
 
   const [productos, setProductos] = useState<Producto[]>([]);
   const [categorias, setCategorias] = useState<Categoria[]>([]);
-  const [marcas, setMarcas] = useState<Marca[]>([]);
+  const [marcas, setMarcas] = useState<string[]>([]);
   const [movimientos, setMovimientos] = useState<Movimiento[]>([]);
   const [search, setSearch] = useState("");
   const [catFilter, setCatFilter] = useState<string>("all");

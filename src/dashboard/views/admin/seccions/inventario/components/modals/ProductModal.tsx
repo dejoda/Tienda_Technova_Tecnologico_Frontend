@@ -1,22 +1,22 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 import { X, Loader2, Plus, Search, ChevronDown } from "lucide-react";
 import ImageManager from "../utils/ImageManager";
-import type { Categoria, ImagenProducto, Producto, ProductoFormState, Marca } from "../../types";
+import type { Categoria, ImagenProducto, Producto, ProductoFormState } from "../../types";
 
 interface ProductModalProps {
   producto: Producto | null;
   categorias: Categoria[];
-  marcas: Marca[];
+  marcas: string[];
   onClose: () => void;
   onSave: (producto: Producto) => Promise<void>;
-  onCreateMarca: (nombre: string) => Promise<Marca>;
+  onCreateMarca: (nombre: string) => Promise<string>;
 }
 
 export default function ProductModal({ producto, categorias, marcas, onClose, onSave, onCreateMarca }: ProductModalProps) {
   console.log("ProductModal marcas prop:", marcas);
   const isEdit = !!producto;
   const [form, setForm] = useState<ProductoFormState>(
-    producto || { nombre: "", descripcion: "", precio: "", stockInicial: "", marcaId: marcas[0]?.idMarca || "", modelo: "", garantia: "", categoriaId: categorias[0]?.id || "" }
+    producto || { nombre: "", descripcion: "", precio: "", stockInicial: "", marca: marcas[0] || "", modelo: "", garantia: "", categoriaId: categorias[0]?.id || "" }
   );
   const [imagenes, setImagenes] = useState<ImagenProducto[]>(producto?.imagenes || []);
   const [error, setError] = useState("");
@@ -40,17 +40,17 @@ export default function ProductModal({ producto, categorias, marcas, onClose, on
   }, []);
 
   const filteredMarcas = useMemo(() => {
-    return marcas.filter(m => m.nombre.toLowerCase().includes(brandSearch.toLowerCase()));
+    return marcas.filter(m => m.toLowerCase().includes(brandSearch.toLowerCase()));
   }, [marcas, brandSearch]);
 
   const selectedMarcaName = useMemo(() => {
-    return marcas.find(m => m.idMarca === form.marcaId)?.nombre || "Seleccionar marca";
-  }, [marcas, form.marcaId]);
+    return form.marca || "Seleccionar marca";
+  }, [form.marca]);
 
   const set = <K extends keyof ProductoFormState>(k: K, v: ProductoFormState[K]) => setForm((f) => ({ ...f, [k]: v }));
 
   const submit = async () => {
-    if (!form.nombre.trim() || form.precio === "" || (!isEdit && form.stockInicial === "") || !form.categoriaId || !form.marcaId) {
+    if (!form.nombre.trim() || form.precio === "" || (!isEdit && form.stockInicial === "") || !form.categoriaId || !form.marca) {
       setError("Completa nombre, precio, stock inicial, categoría y marca.");
       return;
     }
@@ -70,7 +70,7 @@ export default function ProductModal({ producto, categorias, marcas, onClose, on
         stock: isEdit ? (form.stock as number) : Number(form.stockInicial),
         garantia: Number(form.garantia) || 0,
         categoriaId: Number(form.categoriaId),
-        marcaId: Number(form.marcaId),
+        marca: form.marca,
         imagenes,
       } as Producto);
     } catch (err) {
@@ -88,7 +88,7 @@ export default function ProductModal({ producto, categorias, marcas, onClose, on
     try {
       setIsSaving(true);
       const marca = await onCreateMarca(nuevaMarca);
-      set("marcaId", marca.idMarca);
+      set("marca", marca);
       setNuevaMarca("");
       setIsAddingMarca(false);
       setError("");
@@ -164,7 +164,7 @@ export default function ProductModal({ producto, categorias, marcas, onClose, on
                     padding: "9px 11px",
                     cursor: "pointer",
                     fontSize: "13.5px",
-                    color: form.marcaId ? "#e9e9f2" : "#6d6d82",
+                    color: form.marca ? "#e9e9f2" : "#6d6d82",
                     minHeight: "38px"
                   }}
                   onClick={() => setIsBrandOpen(!isBrandOpen)}
@@ -221,9 +221,9 @@ export default function ProductModal({ producto, categorias, marcas, onClose, on
                     {filteredMarcas.length > 0 ? (
                       filteredMarcas.map(m => (
                         <div
-                          key={m.idMarca}
+                          key={m}
                           onClick={() => {
-                            set("marcaId", m.idMarca);
+                            set("marca", m);
                             setIsBrandOpen(false);
                             setBrandSearch("");
                           }}
@@ -231,14 +231,14 @@ export default function ProductModal({ producto, categorias, marcas, onClose, on
                             padding: "9px 11px",
                             fontSize: "13px",
                             cursor: "pointer",
-                            color: m.idMarca === form.marcaId ? "#b45cf0" : "#cfcfe0",
-                            background: m.idMarca === form.marcaId ? "rgba(180, 92, 240, 0.1)" : "transparent",
+                            color: m === form.marca ? "#b45cf0" : "#cfcfe0",
+                            background: m === form.marca ? "rgba(180, 92, 240, 0.1)" : "transparent",
                             borderBottom: "1px solid rgba(255,255,255,0.02)"
                           }}
                           onMouseEnter={(e) => e.currentTarget.style.background = "rgba(255,255,255,0.05)"}
-                          onMouseLeave={(e) => e.currentTarget.style.background = m.idMarca === form.marcaId ? "rgba(180, 92, 240, 0.1)" : "transparent"}
+                          onMouseLeave={(e) => e.currentTarget.style.background = m === form.marca ? "rgba(180, 92, 240, 0.1)" : "transparent"}
                         >
-                          {m.nombre}
+                          {m}
                         </div>
                       ))
                     ) : (
@@ -302,4 +302,3 @@ export default function ProductModal({ producto, categorias, marcas, onClose, on
     </div>
   );
 }
-

@@ -6,7 +6,6 @@ export interface ProductoAdmin {
   categoriaId: number;
   categoria: string;
   descripcion: string;
-  marcaId?: number;
   marca: string;
   modelo: string;
   garantia: number;

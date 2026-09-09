@@ -15,18 +15,15 @@ export interface ImagenProducto {
   file?: File; // Agregado para manejar la subida al servidor
 }
 
-export interface Marca {
-  idMarca: number;
-  nombre: string;
-}
-
+// =============================================================================
+// PRODUCTOS
+// =============================================================================
 export interface Producto {
   id: number;
   nombre: string;
   descripcion: string;
   precio: number;
   stock: number;
-  marcaId: number;
   marca: string;
   modelo: string;
   garantia: number;
@@ -45,10 +42,18 @@ export interface ProductoFormState {
   precio: number | "";
   stock?: number;
   stockInicial?: number | "";
-  marcaId: number | "";
+  marca: string;
   modelo: string;
   garantia: number | "";
   categoriaId: number | ""; // Corregido de categoria_id
+}
+
+// =============================================================================
+// MARCAS
+// =============================================================================
+export interface Marca {
+  idMarca: number;
+  nombre: string;
 }
 
 // =============================================================================
