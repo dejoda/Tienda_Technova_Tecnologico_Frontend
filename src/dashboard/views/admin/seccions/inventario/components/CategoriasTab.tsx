@@ -1,6 +1,6 @@
 import { type Dispatch, type SetStateAction } from "react";
 import { Pencil, Plus, Tag, Trash2 } from "lucide-react";
-import type { Categoria, Producto } from "../types";
+import type { Categoria, Producto } from "../../../interfaces/Inventario/types";
 import CategoryModal from "./modals/CategoryModal";
 
 type CategoriasTabProps = {
@@ -40,10 +40,10 @@ export default function CategoriasTab({
       </div>
 
       <div className="cat-grid">
-        {categorias.map((c) => {
-          const n = productos.filter((p) => p.categoriaId === c.id).length;
+        {categorias.map((c, index) => {
+          const n = productos.filter((p) => Number(p.categoriaId) === Number(c.id)).length;
           return (
-            <div className="cat-card" key={c.id}>
+            <div className="cat-card" key={c.id ? `cat-${c.id}` : `cat-idx-${index}`}>
               <h4>
                 <Tag size={14} color="#b45cf0" /> {c.nombre}
               </h4>

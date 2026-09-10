@@ -62,6 +62,49 @@ export class InventarioAdminService {
     return response.data.data;
   }
 
+  async getCategoriasAdmin(page: number = 0, size: number = 10): Promise<PageResponse<any>> {
+    const response = await axios.get<ApiResponse<PageResponse<any>>>(`${environment.apiBaseUrl}/categorias`, {
+      params: { page, size },
+      headers: this.getAuthHeader()
+    });
+    return response.data.data;
+  }
+
+  async getMovimientosAdmin(
+    filters: {
+      page?: number;
+      size?: number;
+      productoId?: number;
+      tipo?: string;
+      fechaDesde?: string;
+      fechaHasta?: string;
+      search?: string;
+    } = {}
+  ): Promise<PageResponse<MovimientoInventarioResponse>> {
+    try {
+      // Usamos directamente el endpoint básico para evitar el error 403 del table-admin
+      const response = await axios.get<ApiResponse<MovimientoInventarioResponse[]>>(`${MOVIMIENTOS_URL}`, {
+        headers: this.getAuthHeader()
+      });
+
+      const data = response.data.data ?? [];
+      return {
+        content: data,
+        totalPages: 1,
+        totalElements: data.length,
+        size: data.length,
+        number: 0,
+        first: true,
+        last: true,
+        numberOfElements: data.length,
+        empty: data.length === 0
+      };
+    } catch (error: any) {
+      console.error("Error cargando movimientos:", error);
+      throw error;
+    }
+  }
+
   async createProducto(producto: any): Promise<ProductoAdmin> {
     const { categoria, ...data } = producto;
 
@@ -111,27 +154,20 @@ export class InventarioAdminService {
   // =========================
   async getMarcas(): Promise<any[]> {
     try {
-      console.log("Fetching marcas from:", MARCAS_URL);
       const response = await axios.get<ApiResponse<any>>(`${MARCAS_URL}`, {
         headers: this.getAuthHeader()
       });
 
-      console.log("RAW response.data:", response.data);
-
       const data = response.data?.data;
-      console.log("Extracted data (response.data.data):", data);
 
       if (data && typeof data === 'object' && 'content' in data) {
-        console.log("Detected PageResponse structure. Returning content.");
         return data.content;
       }
 
       if (Array.isArray(data)) {
-        console.log("Detected Array structure. Returning array.");
         return data;
       }
 
-      console.warn("Unknown data structure for marcas. Returning empty array.");
       return [];
     } catch (error: any) {
       console.error("Error in getMarcas service:", error);
@@ -166,6 +202,19 @@ export class InventarioAdminService {
     });
 
     return response.data.data;
+  }
+
+  async updateImagenPrincipal(imagenId: number, isPrincipal: boolean): Promise<void> {
+    await axios.put(`${IMAGENES_URL}/principal/${imagenId}`, null, {
+      params: { isPrincipal },
+      headers: this.getAuthHeader()
+    });
+  }
+
+  async deleteProductoImagen(imagenId: number): Promise<void> {
+    await axios.delete(`${IMAGENES_URL}/${imagenId}`, {
+      headers: this.getAuthHeader()
+    });
   }
 
   // =========================

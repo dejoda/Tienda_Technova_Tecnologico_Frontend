@@ -1,7 +1,7 @@
 import { type Dispatch, type SetStateAction } from "react";
 import { ArrowUpDown, PackageSearch, Pencil, Plus, Search, Trash2 } from "lucide-react";
-import type { Categoria, Producto, Marca } from "../types";
-import { principalDe, soles } from "../data";
+import type { Categoria, Producto, Marca } from "../../../interfaces/Inventario/types";
+import { principalDe, soles } from "../utils/data";
 import StockBadge from "./utils/StockBadge";
 import ProductModal from "./modals/ProductModal";
 import MovementModal from "./modals/MovementModal";
@@ -26,6 +26,8 @@ type ProductosTabProps = {
   saveMovement: (mov: any) => void;
   handleCreateMarca: (nombre: string) => Promise<Marca>;
   catName: (id: any, fallback?: string) => string;
+  onUpdatePrincipal: (id: number, isPrincipal: boolean) => Promise<void>;
+  onDeleteImagen: (id: number) => Promise<void>;
 };
 
 export default function ProductosTab({
@@ -47,6 +49,8 @@ export default function ProductosTab({
   saveMovement,
   handleCreateMarca,
   catName,
+  onUpdatePrincipal,
+  onDeleteImagen,
 }: ProductosTabProps) {
   return (
     <>
@@ -62,8 +66,8 @@ export default function ProductosTab({
 
         <select className="filter" value={catFilter} onChange={(e) => setCatFilter(e.target.value)}>
           <option value="all">Todas las categorías</option>
-          {categorias.map((c) => (
-            <option key={c.id} value={c.id}>
+          {categorias.map((c, index) => (
+            <option key={c.id ? `cat-${c.id}` : `cat-idx-${index}`} value={c.id}>
               {c.nombre}
             </option>
           ))}
@@ -151,13 +155,15 @@ export default function ProductosTab({
         <ProductModal
           producto={editingProduct}
           categorias={categorias}
-          marcas={marcas}
+          marcas={marcas.map(m => m.nombre)}
           onClose={() => {
             setShowProductModal(false);
             setEditingProduct(null);
           }}
           onSave={saveProduct}
           onCreateMarca={handleCreateMarca}
+          onUpdatePrincipal={onUpdatePrincipal}
+          onDeleteImagen={onDeleteImagen}
         />
       )}
 

@@ -1,9 +1,10 @@
-import type { Movimiento, Producto } from "../types";
-import { TIPO_INFO, fechaCorta } from "../data";
+import type { Movimiento, Producto } from "../../../interfaces/Inventario/types";
+import { TIPO_INFO, fechaCorta } from "../utils/data";
 
 type MovimientosTabProps = {
   movimientos: Movimiento[];
   productos: Producto[];
+  onSearch: (filters: any) => Promise<void>;
 };
 
 export default function MovimientosTab({ movimientos, productos }: MovimientosTabProps) {
@@ -22,10 +23,10 @@ export default function MovimientosTab({ movimientos, productos }: MovimientosTa
         </tr>
       </thead>
       <tbody>
-        {movimientos.map((m) => {
+        {movimientos.map((m, index) => {
           const info = TIPO_INFO[m.tipo];
           return (
-            <tr key={m.id}>
+            <tr key={m.id ?? index}>
               <td>{fechaCorta(m.fecha)}</td>
               <td>{prodName(m.productoId)}</td>
               <td>

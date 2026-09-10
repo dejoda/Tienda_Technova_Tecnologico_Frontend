@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { X } from "lucide-react";
-import type { Categoria } from "../../types";
+import type { Categoria } from "../../../../interfaces/Inventario/types";
 
 interface CategoryModalProps {
   categoria: Categoria | null;
@@ -40,7 +40,9 @@ export default function CategoryModal({ categoria, onClose, onSave }: CategoryMo
                 setError("Ponle un nombre a la categoría.");
                 return;
               }
-              onSave({ ...form, id: isEdit ? (categoria as Categoria).id : Date.now() });
+              // Aseguramos que el ID no sea undefined para evitar el error 403/400 en el servidor
+              const categoryId = isEdit ? (categoria?.id ?? Date.now()) : Date.now();
+              onSave({ ...form, id: categoryId });
             }}
           >
             {isEdit ? "Guardar" : "Crear"}

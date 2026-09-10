@@ -1,15 +1,26 @@
 import { ArrowDownCircle, ArrowUpCircle, SlidersHorizontal } from "lucide-react";
-import type { TipoMovimiento } from "./types";
+import type { TipoMovimiento } from "../../../interfaces/Inventario/types";
 
 export const STOCK_BAJO = 5;
 
-export const slugify = (s: string) =>
-  s
-    .toLowerCase()
+export const slugify = (s: string) => {
+  if (!s) return "producto";
+  let cleanS = s.toLowerCase();
+  const genericPrefixes = ["laptop", "mouse", "teclado", "monitor", "auriculares", "impresora", "silla", "mesa"];
+
+  for (const prefix of genericPrefixes) {
+    if (cleanS.startsWith(prefix + " ")) {
+      cleanS = cleanS.substring(prefix.length).trim();
+      break;
+    }
+  }
+
+  return cleanS
     .normalize("NFD")
     .replace(/[̀-ͯ]/g, "")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
+};
 
 export const rutaImagen = (nombreProducto: string, index: number) => {
   const slug = slugify(nombreProducto || "producto");

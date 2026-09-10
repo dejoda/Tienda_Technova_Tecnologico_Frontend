@@ -1,6 +1,6 @@
 import { type Dispatch, type SetStateAction } from "react";
-import type { Producto } from "../types";
-import { principalDe } from "../data";
+import type { Producto } from "../../../interfaces/Inventario/types";
+import { principalDe } from "../utils/data";
 import StockBadge from "./utils/StockBadge";
 
 type AlertasTabProps = {

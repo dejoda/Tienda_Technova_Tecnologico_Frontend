@@ -1,7 +1,7 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 import { X, Loader2, Plus, Search, ChevronDown } from "lucide-react";
 import ImageManager from "../utils/ImageManager";
-import type { Categoria, ImagenProducto, Producto, ProductoFormState } from "../../types";
+import type { Categoria, ImagenProducto, Producto, ProductoFormState } from "../../../../interfaces/Inventario/types";
 
 interface ProductModalProps {
   producto: Producto | null;
@@ -10,10 +10,11 @@ interface ProductModalProps {
   onClose: () => void;
   onSave: (producto: Producto) => Promise<void>;
   onCreateMarca: (nombre: string) => Promise<string>;
+  onUpdatePrincipal: (id: number, isPrincipal: boolean) => Promise<void>;
+  onDeleteImagen: (id: number) => Promise<void>;
 }
 
-export default function ProductModal({ producto, categorias, marcas, onClose, onSave, onCreateMarca }: ProductModalProps) {
-  console.log("ProductModal marcas prop:", marcas);
+export default function ProductModal({ producto, categorias, marcas, onClose, onSave, onCreateMarca, onUpdatePrincipal, onDeleteImagen }: ProductModalProps) {
   const isEdit = !!producto;
   const [form, setForm] = useState<ProductoFormState>(
     producto || { nombre: "", descripcion: "", precio: "", stockInicial: "", marca: marcas[0] || "", modelo: "", garantia: "", categoriaId: categorias[0]?.id || "" }
@@ -40,7 +41,7 @@ export default function ProductModal({ producto, categorias, marcas, onClose, on
   }, []);
 
   const filteredMarcas = useMemo(() => {
-    return marcas.filter(m => m.toLowerCase().includes(brandSearch.toLowerCase()));
+    return marcas.filter(m => (m || "").toLowerCase().includes(brandSearch.toLowerCase()));
   }, [marcas, brandSearch]);
 
   const selectedMarcaName = useMemo(() => {
@@ -283,7 +284,13 @@ export default function ProductModal({ producto, categorias, marcas, onClose, on
             <div className="field"><label>Modelo</label><input value={form.modelo} onChange={(e) => set("modelo", e.target.value)} disabled={isSaving} /></div>
           </div>
 
-          <ImageManager nombreProducto={form.nombre} imagenes={imagenes} setImagenes={setImagenes} />
+          <ImageManager
+            nombreProducto={form.nombre}
+            imagenes={imagenes}
+            setImagenes={setImagenes}
+            onUpdatePrincipal={onUpdatePrincipal}
+            onDeleteImagen={onDeleteImagen}
+          />
 
           {error && <p className="error-text">{error}</p>}
         </div>

@@ -4,11 +4,11 @@ import ProductosTab from "./components/ProductosTab";
 import MovimientosTab from "./components/MovimientosTab";
 import CategoriasTab from "./components/CategoriasTab";
 import AlertasTab from "./components/AlertasTab";
-import { STOCK_BAJO } from "./data";
-import { adaptProductoAdmin } from "./adapters";
+import { STOCK_BAJO } from "./utils/data";
+import { adaptProductoAdmin } from "./utils/adapters";
 import { InventarioAdminService } from "../../services/inventario/InventarioAdminService";
 import { CategoriaService } from "../../../../../service/categoriaService";
-import type { Categoria, Movimiento, Producto } from "./types";
+import type { Categoria, Marca, Movimiento, Producto } from "../../interfaces/Inventario/types";
 import "./style/inventario.css";
 
 type Tab = "productos" | "movimientos" | "categorias" | "alertas";
@@ -21,8 +21,9 @@ export default function ProductosSeccionAdmin() {
 
   const [productos, setProductos] = useState<Producto[]>([]);
   const [categorias, setCategorias] = useState<Categoria[]>([]);
-  const [marcas, setMarcas] = useState<string[]>([]);
+  const [marcas, setMarcas] = useState<Marca[]>([]);
   const [movimientos, setMovimientos] = useState<Movimiento[]>([]);
+  const [alertas, setAlertas] = useState<Producto[]>([]);
   const [search, setSearch] = useState("");
   const [catFilter, setCatFilter] = useState<string>("all");
   const [editingProduct, setEditingProduct] = useState<Producto | null>(null);
@@ -37,36 +38,29 @@ export default function ProductosSeccionAdmin() {
     return found?.nombre || fallback || "—";
   };
 
-  // Función dedicada para cargar marcas
   const loadMarcas = async () => {
     try {
-      console.log("Ejecutando loadMarcas...");
       const m = await inventarioAdminService.getMarcas();
-      console.log("Marcas recibidas en componente:", m);
-      setMarcas(m);
+      setMarcas(m as Marca[]);
     } catch (err) {
       console.error("Error cargando marcas en componente:", err);
     }
   };
 
-  // 1. Carga inicial de datos (Categorías y Movimientos)
   useEffect(() => {
     const cargarDatosIniciales = async () => {
-      // Carga de categorías (Público)
       try {
-        const catPage = await categoriaService.getCategorias(0, 100);
-        setCategorias(catPage.content);
+        const catPageData = await inventarioAdminService.getCategoriasAdmin(0, 1000);
+        setCategorias(catPageData.content);
       } catch (err) {
         console.error("Error cargando categorías:", err);
       }
 
-      // Carga de marcas (Admin)
       await loadMarcas();
 
-      // Carga de movimientos (Privado/Admin)
       try {
-        const movs = await inventarioAdminService.getMovimientos();
-        setMovimientos(movs.map(m => ({
+        const movPageData = await inventarioAdminService.getMovimientosAdmin({ page: 0, size: 1000 });
+        setMovimientos(movPageData.content.map(m => ({
           id: m.idMovimiento,
           productoId: m.productoId,
           tipo: m.tipo,
@@ -79,18 +73,19 @@ export default function ProductosSeccionAdmin() {
       } catch (err) {
         console.error("Error cargando movimientos:", err);
       }
+
+      await loadAlerts();
     };
     cargarDatosIniciales();
   }, []);
 
-  // Función dedicada para cargar productos (para poder llamarla desde cualquier lugar)
   const loadProductos = async () => {
     const categoriaNombre = catFilter === "all" ? undefined : catName(Number(catFilter));
     try {
       const page = await inventarioAdminService.getProductosAdmin(
         { nombre: search || undefined, categoria: categoriaNombre },
         0,
-        200
+        1000
       );
       setProductos(page.content.map(adaptProductoAdmin));
     } catch (err) {
@@ -98,22 +93,57 @@ export default function ProductosSeccionAdmin() {
     }
   };
 
-  // 2. Buscador y filtro de productos (Sincronizado con Backend)
+  const loadMovimientos = async (filters = {}) => {
+    try {
+      const pageData = await inventarioAdminService.getMovimientosAdmin({
+        page: 0,
+        size: 1000,
+        ...filters
+      });
+      setMovimientos(pageData.content.map(m => ({
+        id: m.idMovimiento,
+        productoId: m.productoId,
+        tipo: m.tipo,
+        cantidad: m.cantidad,
+        motivo: m.motivo,
+        usuario: m.usuarioNombre,
+        fecha: m.fecha,
+        nuevoStock: m.stockResultante
+      })));
+    } catch (err) {
+      console.error("Error al cargar movimientos:", err);
+    }
+  };
+
+  const loadAlerts = async () => {
+    try {
+      const pageData = await inventarioAdminService.getProductosAdmin(
+        { stockMax: STOCK_BAJO },
+        0,
+        1000
+      );
+      const filteredAlerts = pageData.content
+        .map(adaptProductoAdmin)
+        .filter(p => p.stock <= STOCK_BAJO);
+      setAlertas(filteredAlerts);
+    } catch (err) {
+      console.error("Error al cargar alertas:", err);
+    }
+  };
+
+  const handleMovSearch = async (filters: any) => {
+    await loadMovimientos(filters);
+  };
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       loadProductos();
     }, 300);
-
     return () => clearTimeout(timeout);
   }, [search, catFilter]);
 
-  const filtered = productos;
-  const lowStock = productos.filter((p) => p.stock <= STOCK_BAJO);
   const movimientosOrdenados = [...movimientos].sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
 
-  // =========================
-  // ACCIONES DE PRODUCTOS
-  // =========================
   const saveProduct = async (p: Producto) => {
     try {
       const isNew = !productos.some((x) => x.id === p.id);
@@ -127,7 +157,6 @@ export default function ProductosSeccionAdmin() {
         productId = updated.id;
       }
 
-      // Subir imágenes nuevas en PARALELO para eliminar el retraso
       const nuevasImagenes = p.imagenes.filter(img => img.file);
       if (nuevasImagenes.length > 0) {
         await Promise.all(
@@ -141,9 +170,7 @@ export default function ProductosSeccionAdmin() {
         );
       }
 
-      // Refrescar datos inmediatamente sin hacks de estado
       await loadProductos();
-
       setShowProductModal(false);
       setEditingProduct(null);
     } catch (err) {
@@ -155,9 +182,8 @@ export default function ProductosSeccionAdmin() {
   const handleCreateMarca = async (nombre: string) => {
     try {
       const newMarca = await inventarioAdminService.createMarca(nombre);
-      console.log("Nueva marca creada exitosamente:", newMarca);
-      await loadMarcas(); // Recargar la lista completa desde el servidor
-      return newMarca;
+      await loadMarcas();
+      return newMarca as Marca;
     } catch (err) {
       alert("Error al registrar la marca");
       console.error(err);
@@ -177,9 +203,24 @@ export default function ProductosSeccionAdmin() {
     }
   };
 
-  // =========================
-  // ACCIONES DE CATEGORÍAS
-  // =========================
+  const updatePrincipalImage = async (imagenId: number, isPrincipal: boolean) => {
+    try {
+      await inventarioAdminService.updateImagenPrincipal(imagenId, isPrincipal);
+    } catch (err) {
+      console.error("Error actualizando imagen principal:", err);
+      alert("Error al actualizar la imagen principal");
+    }
+  };
+
+  const deleteProductImage = async (imagenId: number) => {
+    try {
+      await inventarioAdminService.deleteProductoImagen(imagenId);
+    } catch (err) {
+      console.error("Error eliminando imagen del producto:", err);
+      alert("Error al eliminar la imagen del servidor");
+    }
+  };
+
   const saveCategory = async (c: Categoria) => {
     try {
       const isNew = !categorias.some((x) => x.id === c.id);
@@ -188,11 +229,8 @@ export default function ProductosSeccionAdmin() {
       } else {
         await categoriaService.updateCategoria(c.id, c);
       }
-
-      // Refrescar categorías
       const catPage = await categoriaService.getCategorias(0, 100);
       setCategorias(catPage.content);
-
       setShowCategoryModal(false);
       setEditingCategory(null);
     } catch (err) {
@@ -217,9 +255,6 @@ export default function ProductosSeccionAdmin() {
     }
   };
 
-  // =========================
-  // ACCIONES DE MOVIMIENTOS
-  // =========================
   const saveMovement = async (mov: Movimiento) => {
     try {
       await inventarioAdminService.registrarMovimiento({
@@ -227,10 +262,8 @@ export default function ProductosSeccionAdmin() {
         tipo: mov.tipo,
         cantidad: mov.cantidad,
         motivo: mov.motivo,
-        usuarioId: 1 // ID admin por defecto
+        usuarioId: 1
       });
-
-      // Refrescar movimientos y productos
       const movs = await inventarioAdminService.getMovimientos();
       setMovimientos(movs.map(m => ({
         id: m.idMovimiento,
@@ -242,8 +275,7 @@ export default function ProductosSeccionAdmin() {
         fecha: m.fecha,
         nuevoStock: m.stockResultante
       })));
-
-      setSearch(search); // Dispara el useEffect de productos para actualizar stock
+      await loadProductos();
       setMovementProduct(null);
     } catch (err) {
       alert("Error al registrar el movimiento");
@@ -267,7 +299,7 @@ export default function ProductosSeccionAdmin() {
           <Tag size={15} /> Categorías <span className="count">{categorias.length}</span>
         </button>
         <button className={`tab-btn ${tab === "alertas" ? "active" : ""}`} onClick={() => setTab("alertas")}>
-          <AlertTriangle size={15} /> Stock bajo <span className="count">{lowStock.length}</span>
+          <AlertTriangle size={15} /> Stock bajo <span className="count">{alertas.length}</span>
         </button>
       </div>
 
@@ -276,7 +308,7 @@ export default function ProductosSeccionAdmin() {
           productos={productos}
           categorias={categorias}
           marcas={marcas}
-          filtered={filtered}
+          filtered={productos}
           search={search}
           setSearch={setSearch}
           catFilter={catFilter}
@@ -292,11 +324,17 @@ export default function ProductosSeccionAdmin() {
           saveMovement={saveMovement}
           handleCreateMarca={handleCreateMarca}
           catName={catName}
+          onUpdatePrincipal={updatePrincipalImage}
+          onDeleteImagen={deleteProductImage}
         />
       )}
 
       {tab === "movimientos" && (
-        <MovimientosTab movimientos={movimientosOrdenados} productos={productos} />
+        <MovimientosTab
+          movimientos={movimientosOrdenados}
+          productos={productos}
+          onSearch={handleMovSearch}
+        />
       )}
 
       {tab === "categorias" && (
@@ -313,7 +351,11 @@ export default function ProductosSeccionAdmin() {
       )}
 
       {tab === "alertas" && (
-        <AlertasTab lowStock={lowStock} catName={catName} setMovementProduct={setMovementProduct} />
+        <AlertasTab
+          lowStock={alertas}
+          catName={catName}
+          setMovementProduct={setMovementProduct}
+        />
       )}
     </div>
   );

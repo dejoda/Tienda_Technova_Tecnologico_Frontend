@@ -1,4 +1,4 @@
-import { STOCK_BAJO } from "../../data";
+import { STOCK_BAJO } from "../../utils/data";
 
 interface StockBadgeProps {
   stock: number;

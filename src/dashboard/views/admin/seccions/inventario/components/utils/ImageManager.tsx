@@ -1,14 +1,16 @@
 import { Star, Trash2, Upload } from "lucide-react";
-import { rutaImagen } from "../../data";
-import type { ImagenProducto } from "../../types";
+import { rutaImagen } from "../../utils/data";
+import type { ImagenProducto } from "../../../../interfaces/Inventario/types";
 
 interface ImageManagerProps {
   nombreProducto: string;
   imagenes: ImagenProducto[];
   setImagenes: (imagenes: ImagenProducto[]) => void;
+  onUpdatePrincipal?: (id: number, isPrincipal: boolean) => Promise<void>;
+  onDeleteImagen?: (id: number) => Promise<void>;
 }
 
-export default function ImageManager({ nombreProducto, imagenes, setImagenes }: ImageManagerProps) {
+export default function ImageManager({ nombreProducto, imagenes, setImagenes, onUpdatePrincipal, onDeleteImagen }: ImageManagerProps) {
   const onFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     if (!files.length) return;
@@ -23,13 +25,41 @@ export default function ImageManager({ nombreProducto, imagenes, setImagenes }: 
     e.target.value = "";
   };
 
-  const marcarPrincipal = (id: number) =>
-    setImagenes(imagenes.map((im) => ({ ...im, principal: im.id === id })));
+  const marcarPrincipal = async (id: number) => {
+    const img = imagenes.find(i => i.id === id);
 
-  const eliminar = (id: number) => {
+    const nextImagenes = imagenes.map((im) => ({ ...im, principal: im.id === id }));
+    setImagenes(nextImagenes);
+
+    if (onUpdatePrincipal && img) {
+      const isBlob = img.url.startsWith("blob:");
+      if (!isBlob) {
+        try {
+          await onUpdatePrincipal(id, true);
+        } catch (err) {
+          console.error("Error actualizando imagen principal en servidor:", err);
+        }
+      }
+    }
+  };
+
+  const eliminar = async (id: number) => {
+    const img = imagenes.find(i => i.id === id);
+
     const restantes = imagenes.filter((im) => im.id !== id);
     if (restantes.length && !restantes.some((im) => im.principal)) restantes[0].principal = true;
     setImagenes(restantes);
+
+    if (onDeleteImagen && img) {
+      const isBlob = img.url.startsWith("blob:");
+      if (!isBlob) {
+        try {
+          await onDeleteImagen(id);
+        } catch (err) {
+          console.error("Error eliminando imagen en servidor:", err);
+        }
+      }
+    }
   };
 
   return (

@@ -95,3 +95,12 @@ tbody tr:hover { background: #14141d; }
 .img-path { display: block; font-size: 9.5px; color: #6d6d82; padding: 4px 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .img-upload { width: 108px; height: 78px; margin-top: 0; border: 1px dashed #33333f; border-radius: 9px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #7f7f95; font-size: 10.5px; cursor: pointer; }
 .img-upload:hover { border-color: #7c3aed; color: #cfcfe0; }
+
+.pagination { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 20px; padding-bottom: 20px; }
+.pagination-btn { background: #16161f; border: 1px solid #292937; color: #cfcfe0; width: 32px; height: 32px; border-radius: 7px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 13px; transition: all 0.2s; }
+.pagination-btn:hover:not(.disabled) { background: #1e1e29; border-color: #3a3a4a; }
+.pagination-btn.active { background: var(--app-accent-3); color: white; border-color: var(--app-accent-3); font-weight: 600; }
+.pagination-btn.disabled { opacity: 0.4; cursor: not-allowed; }
+.pagination-pages { display: flex; gap: 4px; align-items: center; }
+.pagination-dots { color: #5c5c70; font-size: 12px; }
+
